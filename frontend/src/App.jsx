@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/NavBar'
 import Footer from './components/Footer/Footer'
 import CoursesView from './views/CoursesView/CoursesView'
 import SignInView from './views/SignInView/SignInView'
+import SignUpView from './views/SignUpView/SignUpView'
 
 import { useCourseContext } from './context/CourseContext'
 import { useEffect } from 'react'
@@ -102,6 +103,7 @@ function App() {
         <Route path='/courses' element={<CoursesView />} />
         <Route path='/coursemoredetails/:id' element={<CourseMoreDetailsView />} />
         <Route path='/signin' element={<SignInView />} />
+        <Route path='/signup' element={<SignUpView />} />
       </Routes>
       <Footer />
     </>
