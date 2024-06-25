@@ -1,0 +1,56 @@
+/* .coursesView{
+    
+} */
+
+.coursesView .headerBox{
+    height: 86vh;
+    background: url(../../assets/courses-view-header.png), url('../../assets/background-light.jpg');
+    background-repeat: no-repeat, no-repeat;
+    background-size: 500px, cover;
+    background-position: right 100px center, center;
+    /* text-align: right; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 15px;
+    padding: 0 80px;
+}
+
+.coursesView .headerBox .mainText{
+    font-size: 2.5rem;
+    font-weight: 800;
+    width: 53%;
+    color: var(--primaryColor);
+}
+
+.coursesView .headerBox .subText{
+    font-size: .9rem;
+    letter-spacing: 1px;
+    width: 35%;
+}
+
+.coursesView .coursesContainer{
+    margin: 100px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.coursesView .coursesContainer .courseSearch{
+    display: flex;
+    gap: 35px;
+}
+
+.coursesView .coursesContainer .courseSearch input,
+.coursesView .coursesContainer .courseSearch select{
+    padding: 8px 15px;
+}
+
+.coursesView .coursesContainer .mainContainer{
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 35px 20px;
+}
