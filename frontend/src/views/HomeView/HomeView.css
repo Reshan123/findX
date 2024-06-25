@@ -30,6 +30,38 @@
     width: 35%;
 }
 
+.homeView .headerBox .buttonContainer{
+    display: flex;
+    gap: 15px;
+}
+
+.homeView .headerBox .buttonContainer button{
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 25px;
+    transition: box-shadow .2s ease-in-out;
+}
+
+.homeView .headerBox .buttonContainer button:hover{
+    box-shadow: #00000069 5px 5px 5px;
+}
+
+.homeView .headerBox .buttonContainer button:active{
+    box-shadow: #00000069 3px 3px 3px;
+}
+
+.homeView .headerBox .buttonContainer button:nth-child(1){
+    /* background-color: ;
+    color: ; */
+}
+
+.homeView .headerBox .buttonContainer button:nth-child(2){
+    background-color: var(--secondaryColor);
+    color: var(--accentColorLight);
+}
+
 
 .homeView .topCourses{
     width: 90vw;

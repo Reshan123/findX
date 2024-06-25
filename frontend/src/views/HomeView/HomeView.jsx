@@ -7,9 +7,12 @@ import CourseCard from '../../components/CourseCard/CourseCard';
 
 import { ImQuotesLeft } from "react-icons/im";
 import { GoDot, GoDotFill } from "react-icons/go";
+import { useNavigate } from 'react-router-dom';
 
 const HomeView = () => {
 
+    const navigate = useNavigate()
+    
     const { courses } = useCourseContext();
     let coursesDisplayed = 0;
 
@@ -49,6 +52,10 @@ const HomeView = () => {
             <div className="headerBox">
                 <div className='mainText'>Unlock Your Potential with Expert Led Online Courses</div>
                 <div className="subText">Welcome to our e-learning platform, offering expert-led courses across various fields. Enhance your skills, advance your career, and achieve your goals with our flexible and interactive learning experiences. Join us today and start your journey towards success!</div>
+                <div className="buttonContainer">
+                    <button onClick={() => navigate('/signin')}>Sign In</button>
+                    <button onClick={() => navigate('/signup')}>Sign Up</button>
+                </div>
             </div>
             <div className="topCourses">
                 <div className="title">Top Courses <hr /></div>
