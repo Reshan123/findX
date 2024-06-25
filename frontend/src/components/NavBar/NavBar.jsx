@@ -27,7 +27,7 @@ const NavBar = () => {
                 <div className="links">
                     <NavLink to="/" onClick={scrollToTop}>Home</NavLink>
                     <NavLink to="/courses" onClick={scrollToTop}>Courses</NavLink>
-                    <NavLink to="/profile" onClick={scrollToTop}><FaUserCircle /></NavLink>
+                    {/* <NavLink to="/profile" onClick={scrollToTop}><FaUserCircle /></NavLink> */}
                 </div>
             </div>
         </nav>
