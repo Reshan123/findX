@@ -1,3 +1,78 @@
 .CourseMoreDetailsView{
     min-height: 86vh;
 }
+
+.CourseMoreDetailsView .courseImage{
+    z-index: -1;
+    width: 100%;
+    aspect-ratio: 1200 / 675;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-attachment: fixed; */
+    position: sticky;
+    top: 12vh;
+}
+
+.CourseMoreDetailsView .bottomContainer{
+    /* width: 100vw; */
+    padding: 20px 150px;
+    background: rgba(255, 255, 255, 0.923);
+}
+
+.CourseMoreDetailsView .bottomContainer .titleContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.CourseMoreDetailsView .bottomContainer .titleContainer .courseTitle{
+    padding: 15px 0px;
+    font-size: 3.5rem;
+    color: var(--secondaryColor);
+    font-weight: 800;
+}
+
+.CourseMoreDetailsView .bottomContainer .ratingContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.CourseMoreDetailsView .bottomContainer .ratingContainer .enrollButton{
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 25px;
+    background: var(--accentColorLight);
+    transition: box-shadow .2s ease-in-out;
+}
+
+.CourseMoreDetailsView .bottomContainer .ratingContainer .enrollButton:hover{
+    box-shadow: #00000069 5px 5px 5px;
+}
+
+.CourseMoreDetailsView .bottomContainer .ratingContainer .enrollButton:active{
+    box-shadow: #00000069 3px 3px 3px;
+}
+
+.CourseMoreDetailsView .bottomContainer .courseDescription{
+    text-align: justify;
+    padding: 25px 0;
+    letter-spacing: .5px;
+    line-height: 1.6;
+}
+
+.CourseMoreDetailsView .bottomContainer .coursePrice{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accentColor);
+}
+
+.CourseMoreDetailsView .bottomContainer .coursePrice span{
+    /* font-size: 1rem; */
+    color: var(--redColor);
+    text-decoration: line-through;
+}

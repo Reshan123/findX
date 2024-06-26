@@ -60,36 +60,14 @@ const HomeView = () => {
             <div className="topCourses">
                 <div className="title">Top Courses <hr /></div>
                 <div className="courseContainer">
-                    {courses && courses.map((course, index) => {
-                        if(course.rating == 5 && coursesDisplayed < 4){
-                            coursesDisplayed++;
-                            return <CourseCard id={course.id} key={index} title={course.title} description={course.description} actualPrice={course.actualPrice} discountedPrice={course.discountedPrice} rating={course.rating} />
-                        }
-                    })}
-                    {courses && courses.map((course, index) => {
-                        if(course.rating == 4 && coursesDisplayed < 4){
-                            coursesDisplayed++;
-                            return <CourseCard id={course.id} key={index} title={course.title} description={course.description} actualPrice={course.actualPrice} discountedPrice={course.discountedPrice} rating={course.rating} />
-                        }
-                    })}
-                    {courses && courses.map((course, index) => {
-                        if(course.rating == 3 && coursesDisplayed < 4){
-                            coursesDisplayed++;
-                            return <CourseCard id={course.id} key={index} title={course.title} description={course.description} actualPrice={course.actualPrice} discountedPrice={course.discountedPrice} rating={course.rating} />
-                        }
-                    })}
-                    {courses && courses.map((course, index) => {
-                        if(course.rating == 2 && coursesDisplayed < 4){
-                            coursesDisplayed++;
-                            return <CourseCard id={course.id} key={index} title={course.title} description={course.description} actualPrice={course.actualPrice} discountedPrice={course.discountedPrice} rating={course.rating} />
-                        }
-                    })}
-                    {courses && courses.map((course, index) => {
-                        if(course.rating == 1 && coursesDisplayed < 4){
-                            coursesDisplayed++;
-                            return <CourseCard id={course.id} key={index} title={course.title} description={course.description} actualPrice={course.actualPrice} discountedPrice={course.discountedPrice} rating={course.rating} />
-                        }
-                    })}
+                {courses && courses
+                    .filter(course => course.rating >= 1 && course.rating <= 5) // Filter courses with valid ratings
+                    .sort((a, b) => b.rating - a.rating) // Sort courses by rating in descending order
+                    .slice(0, 4) // Limit to the first 4 courses
+                    .map((course, index) => (
+                        <CourseCard key={index} course={course} /> // Render the CourseCard component
+                    ))
+                }
                 </div>
             </div>
             <div className="testimonials">

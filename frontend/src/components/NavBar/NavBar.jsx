@@ -5,10 +5,13 @@ import { NavLink } from 'react-router-dom';
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa";
 
 const NavBar = () => {
 
     const scrollToTop = () => window.scroll(0, 0)
+
+    const user = true;
 
     return ( 
         <nav>
@@ -25,9 +28,25 @@ const NavBar = () => {
                     <img src={logo} alt="" />
                 </div>
                 <div className="links">
-                    <NavLink to="/" onClick={scrollToTop}>Home</NavLink>
-                    <NavLink to="/courses" onClick={scrollToTop}>Courses</NavLink>
-                    {/* <NavLink to="/profile" onClick={scrollToTop}><FaUserCircle /></NavLink> */}
+                    {!user && (
+                        <>
+                            <NavLink to="/" onClick={scrollToTop}>Home</NavLink>
+                            <NavLink to="/courses" onClick={scrollToTop}>Courses</NavLink>
+                        </>
+                    )}
+
+                    {user && (
+                        <>
+                            <NavLink to="/posts" onClick={scrollToTop}>Home</NavLink>
+                            <NavLink to="/courses" onClick={scrollToTop}>Courses</NavLink>
+                            <div className='profileIcon'><FaUserCircle /><FaAngleDown className='arrowIcon' /></div>
+                            <div className="dropDownMenu">
+                                <NavLink to="/profile" onClick={scrollToTop}>Profile</NavLink>
+                                <NavLink to="/settings" onClick={scrollToTop}>Settings</NavLink>
+                                <NavLink to="/logout" onClick={scrollToTop}>Logout</NavLink>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
