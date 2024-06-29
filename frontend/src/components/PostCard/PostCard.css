@@ -51,7 +51,8 @@
 }
 
 .postCard .bottomContainer .postedOn{
+    color: var(--primaryColor);
     align-self: flex-end;
-    font-size: .8rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
 }

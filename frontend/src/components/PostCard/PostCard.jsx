@@ -9,7 +9,7 @@ import { FaShareAlt } from "react-icons/fa";
 const PostCard = ({ post }) => {
     return ( 
         <div className="postCard">
-            <img src={courseImage} alt="" />
+            <img src={post.imagePath || courseImage} alt="" />
             <div className="bottomContainer">
                 <div className="interactiveContainer">
                     <div><BiLike />  <span>1.1k+</span></div>
