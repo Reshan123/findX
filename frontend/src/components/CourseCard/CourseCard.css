@@ -34,7 +34,7 @@ a.courseCard:hover{
 .courseCard .courseTitle{
     padding: 0px 15px;
     font-size: 1.5rem;
-    color: var(--secondaryColor);
+    color: var(--primaryColor);
     font-weight: 800;
 }
 

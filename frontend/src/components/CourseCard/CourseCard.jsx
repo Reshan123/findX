@@ -19,7 +19,7 @@ const CourseCard = ({ course }) => {
             </div>
             <div className="courseBottomContainer">
                 <div className="courseRating">
-                    <Rating initialRating={course.rating || 2} readonly emptySymbol={<TiStarOutline style={{fontSize: "1.5rem", color: "#72c3cc"}} />} fullSymbol={<TiStarFullOutline style={{fontSize: "1.5rem", color: "#72c3cc"}} />} />
+                    <Rating initialRating={course.rating || 2} readonly emptySymbol={<TiStarOutline style={{fontSize: "1.5rem", color: "#fbb331"}} />} fullSymbol={<TiStarFullOutline style={{fontSize: "1.5rem", color: "#fbb331"}} />} />
                 </div>
                 <div className="coursePrice">
                     {course.discountedPrice ? (<><span>{"LKR " + Intl.NumberFormat('en-US').format(course.actualPrice) || "LKR 1,500"}</span>{"LKR " + Intl.NumberFormat('en-US').format(course.discountedPrice) || "LKR 1,500"}</>) : (<>{"LKR " + Intl.NumberFormat('en-US').format(course.actualPrice) || "LKR 1,500"}</>)}
