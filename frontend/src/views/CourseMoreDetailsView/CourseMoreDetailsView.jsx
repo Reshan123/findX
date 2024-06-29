@@ -40,7 +40,7 @@ const CourseMoreDetailsView = () => {
                         </div>
                         <div className="ratingContainer">
                             <div className="courseRating">
-                                <Rating initialRating={course[0].rating || 2} readonly emptySymbol={<TiStarOutline style={{fontSize: "1.5rem", color: "#72c3cc"}} />} fullSymbol={<TiStarFullOutline style={{fontSize: "1.5rem", color: "#72c3cc"}} />} />
+                                <Rating initialRating={course[0].rating || 2} readonly emptySymbol={<TiStarOutline style={{fontSize: "1.5rem", color: "#fbb331"}} />} fullSymbol={<TiStarFullOutline style={{fontSize: "1.5rem", color: "#fbb331"}} />} />
                             </div>
                             <button className="enrollButton">Enroll to Course</button>
                         </div>

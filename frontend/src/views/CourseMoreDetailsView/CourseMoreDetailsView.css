@@ -28,7 +28,7 @@
 .CourseMoreDetailsView .bottomContainer .titleContainer .courseTitle{
     padding: 15px 0px;
     font-size: 3.5rem;
-    color: var(--secondaryColor);
+    color: var(--primaryColor);
     font-weight: 800;
 }
 
@@ -45,6 +45,7 @@
     border-radius: 5px;
     padding: 10px 25px;
     background: var(--accentColorLight);
+    color: #fff;
     transition: box-shadow .2s ease-in-out;
 }
 
