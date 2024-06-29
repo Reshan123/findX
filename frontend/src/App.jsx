@@ -14,6 +14,7 @@ import { useEffect } from 'react'
 import CourseMoreDetailsView from './views/CourseMoreDetailsView/CourseMoreDetailsView'
 import ProfileView from './views/ProfleView/ProfileView'
 import PostWallView from './views/PostWallView/PostWallView'
+import SettingsView from './views/SettingsView/SettingsView'
 
 function App() {
 
@@ -25,18 +26,28 @@ function App() {
     addPost([
       {
         id: 1,
+        imagePath: "/Images/dummy1.jpg",
         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur quo unde modi minus perspiciatis exercitationem dolorem tempore quia, ea unde corrupti atque incidunt quasi voluptatum voluptatem! Laudantium asperiores unde distinctio incidunt veniam velit. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut ipsam reiciendis tempora, asperiores repellendus ab magnam. Vero repudiandae veniam earum. Eos sed tempora neque culpa voluptate alias accusamus, ut sapiente? Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo laudantium debitis molestiae in sequi! Aliquid eos amet aspernatur autem sint illo, mollitia nisi provident esse dolore sunt maxime unde iusto! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique veritatis nobis dolor corporis eaque dolores, cupiditate eveniet? Cum beatae amet dolor corporis voluptatum placeat maxime asperiores incidunt, vero ipsam exercitationem.",
         topStory: true,
         postedOn: "2024 June 15"
       },
       {
         id: 2,
+        imagePath: "/Images/dummy2.jpg",
         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur quo unde modi minus perspiciatis exercitationem doloremque suscipit et vel aliquam! Esse numquam possimus autem, quae molestiae harum mollitia omnis? Architecto. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates a praesentium ab esse dolore sunt maxime unde iusto! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique veritatis nobis dolor corporis eaque dolores, cupiditate eveniet? Cum beatae amet dolor corporis voluptatum placeat maxime asperiores incidunt, vero ipsam exercitationem.",
         topStory: true,
         postedOn: "2024 June 12"
       },
       {
         id: 3,
+        imagePath: "/Images/dummy3.jpg",
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur quo unde modi minus perspiciatis exercitationem doloremque suscipit et vel aliquam! Esse numquam possimus autem, quae molestiae harum mollitia omnis? Architecto. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates a praesentium ab tempore quia, ea unde corrupti atque incidunt quasi voluptatum voluptatem! Laudantium asperiores unde distinctio incidunt veniam velit. Lorem ipsum dolor sit amet consectetur, adipisiing elit. Explicabo laudantium debitis molestiae in sequi! Aliquid eos t maxime unde iusto! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique veritatis nobis dolor corporis eaque dolores, cupiditate eveniet? Cum beatae amet dolor corporis voluptatum placeat maxime asperiores incidunt, vero ipsam exercitationem.",
+        topStory: false,
+        postedOn: "2024 June 14"
+      },
+      {
+        id: 4,
+        imagePath: "/Images/dummy4.jpg",
         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur quo unde modi minus perspiciatis exercitationem doloremque suscipit et vel aliquam! Esse numquam possimus autem, quae molestiae harum mollitia omnis? Architecto. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates a praesentium ab tempore quia, ea unde corrupti atque incidunt quasi voluptatum voluptatem! Laudantium asperiores unde distinctio incidunt veniam velit. Lorem ipsum dolor sit amet consectetur, adipisiing elit. Explicabo laudantium debitis molestiae in sequi! Aliquid eos t maxime unde iusto! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique veritatis nobis dolor corporis eaque dolores, cupiditate eveniet? Cum beatae amet dolor corporis voluptatum placeat maxime asperiores incidunt, vero ipsam exercitationem.",
         topStory: false,
         postedOn: "2024 June 14"
@@ -128,17 +139,20 @@ function App() {
     ])
   } , [])
 
+  const user = true;
+
   return (
     <>
-      <NavBar />
+      <NavBar user={user} />
       <Routes>
-        <Route path='/' element={<HomeView />} />
+        <Route path='/' element={user ? <PostWallView /> : <HomeView />} />
         <Route path='/profile' element={<ProfileView />} />
         <Route path='/courses' element={<CoursesView />} />
+        <Route path='/settings' element={<SettingsView />} />
         <Route path='/coursemoredetails/:id' element={<CourseMoreDetailsView />} />
         <Route path='/signin' element={<SignInView />} />
         <Route path='/signup' element={<SignUpView />} />
-        <Route path='/posts' element={<PostWallView />} />
+        {/* <Route path='/posts' element={<PostWallView />} /> */}
       </Routes>
       <Footer />
     </>
