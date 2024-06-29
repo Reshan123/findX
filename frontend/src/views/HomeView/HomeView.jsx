@@ -58,17 +58,19 @@ const HomeView = () => {
                 </div>
             </div>
             <div className="topCourses">
-                <div className="title">Top Courses <hr /></div>
-                <div className="courseContainer">
-                {courses && courses
-                    .filter(course => course.rating >= 1 && course.rating <= 5) // Filter courses with valid ratings
-                    .sort((a, b) => b.rating - a.rating) // Sort courses by rating in descending order
-                    .slice(0, 4) // Limit to the first 4 courses
-                    .map((course, index) => (
-                        <CourseCard key={index} course={course} /> // Render the CourseCard component
-                    ))
-                }
-                </div>
+                <fieldset>
+                    <legend className="title">Top Courses</legend>
+                    <div className="courseContainer">
+                    {courses && courses
+                        .filter(course => course.rating >= 1 && course.rating <= 5) // Filter courses with valid ratings
+                        .sort((a, b) => b.rating - a.rating) // Sort courses by rating in descending order
+                        .slice(0, 4) // Limit to the first 4 courses
+                        .map((course, index) => (
+                            <CourseCard key={index} course={course} /> // Render the CourseCard component
+                        ))
+                    }
+                    </div>
+                </fieldset>
             </div>
             <div className="testimonials">
                 <div className="title">Testimonials</div>
