@@ -15,41 +15,51 @@ const PostWallView = () => {
 
     const { courses } = useCourseContext();
     const { posts } = usePostContext();
+    const [topPosts, setTopPosts] = useState([])
+
+    useEffect(() => {
+        if(posts && posts.length > 0){
+            const filteredList = posts.filter( post => (post.topStory))
+            setTopPosts(filteredList)
+        }
+    })
 
     const postHeaderDescription = useRef(null);
     const postHeaderPostedOn = useRef(null);
+    const postHeaderPostImage = useRef(null);
 
     const [currentSlide, setCurrentSlide] = useState(0)
 
     useEffect(() => {
         const changeSlider = () => {
-            setCurrentSlide((prevSlide) => (prevSlide < posts.length - 1 ? prevSlide + 1 : 0));
+            setCurrentSlide((prevSlide) => (prevSlide < topPosts.length - 1 ? prevSlide + 1 : 0));
         };
 
-        const intervalId = setInterval(changeSlider, 3000);
+        const intervalId = setInterval(changeSlider, 5000);
 
         return () => clearInterval(intervalId);
-    }, [posts.length]);
+    }, [topPosts.length]);
 
     useEffect(() => {
-        if (posts && posts.length > 0) {
-            if (postHeaderDescription.current && postHeaderPostedOn.current) {
-                postHeaderPostedOn.current.innerText = posts[currentSlide].postedOn;
-                postHeaderDescription.current.innerText = posts[currentSlide].description;
+        if (topPosts && topPosts.length > 0) {
+            if (postHeaderDescription.current && postHeaderPostedOn.current && postHeaderPostImage.current) {
+                postHeaderPostedOn.current.innerText = topPosts[currentSlide].postedOn;
+                postHeaderDescription.current.innerText = topPosts[currentSlide].description;
+                postHeaderPostImage.current.src = topPosts[currentSlide].imagePath
             }
         }
-    }, [currentSlide, posts]);
+    }, [currentSlide, topPosts]);
 
 
     return ( 
         <div className="postWallView">
             <div className="header">
-                <img src={courseImage} alt="" />
+                <img src="" alt="" ref={postHeaderPostImage} />
                 <div className="rightContainer">
                     <div className="description" ref={postHeaderDescription}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur quo unde modi minus perspiciatis exercitationem doloremque suscipit et vel aliquam! Esse numquam possimus autem, quae molestiae harum mollitia omnis? Architecto. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates a praesentium ab tempore quia, ea unde corrupti atque incidunt quasi voluptatum voluptatem! Laudantium asperiores unde distinctio incidunt veniam velit. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut ipsam reiciendis tempora, asperiores repellendus ab magnam. Vero repudiandae veniam earum. Eos sed tempora neque culpa voluptate alias accusamus, ut sapiente? Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo laudantium debitis molestiae in sequi! Aliquid eos amet aspernatur autem sint illo, mollitia nisi provident esse dolore sunt maxime unde iusto! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique veritatis nobis dolor corporis eaque dolores, cupiditate eveniet? Cum beatae amet dolor corporis voluptatum placeat maxime asperiores incidunt, vero ipsam exercitationem.</div>
                     <div className="postedOn" ref={postHeaderPostedOn}>2024 June 15</div>
                     <div className="dotContainer">
-                        {posts && posts.map((i, index) => {
+                        {topPosts && topPosts.map((i, index) => {
                             return (index == currentSlide ? <GoDotFill key={index}/> : <GoDot key={index} />)
                         })}
                     </div>
