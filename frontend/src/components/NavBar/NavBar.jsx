@@ -7,11 +7,11 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa";
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
 
     const scrollToTop = () => window.scroll(0, 0)
 
-    const user = true;
+    // const user = true;
 
     return ( 
         <nav>
@@ -37,7 +37,7 @@ const NavBar = () => {
 
                     {user && (
                         <>
-                            <NavLink to="/posts" onClick={scrollToTop}>Home</NavLink>
+                            <NavLink to="/" onClick={scrollToTop}>Home</NavLink>
                             <NavLink to="/courses" onClick={scrollToTop}>Courses</NavLink>
                             <div className='profileIcon'><FaUserCircle /><FaAngleDown className='arrowIcon' /></div>
                             <div className="dropDownMenu">
