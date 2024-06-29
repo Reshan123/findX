@@ -1,3 +1,31 @@
 .profileView{
     min-height: 86vh;
 }
+
+.profileView .topContainer{
+    height: 40vh;
+    background: var(--whiteColor);
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+}
+
+.profileView .topContainer .profilePhoto{
+    justify-self: center;
+    font-size: 10rem;
+}
+
+.profileView .topContainer .profileDetails{
+    display: flex;
+    flex-direction: column;
+}
+
+.profileView .topContainer .profileDetails .userName{
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: var(--primaryColor);
+}
+
+.profileView .topContainer .profileDetails .email{
+    font-size: 1.2rem;
+}
