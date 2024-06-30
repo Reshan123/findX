@@ -2,9 +2,11 @@ nav{
     z-index: 999;
     position: sticky;
     top: 0;
-    background: white;
+    background: rgba(236, 236, 236, 0.544);
+    box-shadow: #00000063 0px 0px 5px;
+    backdrop-filter: blur(25px);
     width: 100%;
-    height: 14vh;
+    height: 12vh;
     padding: 0px 50px;
     display: flex;
     flex-direction: column;
@@ -38,10 +40,11 @@ nav .bottomContainer{
 }
 
 nav .bottomContainer .logo{
-    height: 100%;
+    height: 90%;
 }
 
 nav .bottomContainer .links{
+    position: relative;
     margin-right: 50px;
     display: flex;
     gap: 25px;
@@ -55,10 +58,42 @@ nav .bottomContainer .links a{
     justify-content: center;
 }
 
-nav .bottomContainer .links a svg{
+nav .bottomContainer .links .profileIcon .arrowIcon{
+    transition: transform 0.3s ease-in-out;
+}
+
+nav .bottomContainer .links .profileIcon svg{
     font-size: 2rem;
 }
 
 nav .bottomContainer .links a.active{
-    color: var(--accentColor);
+    color: var(--accentColorLight);
+}
+
+nav .bottomContainer .links .profileIcon:hover + .dropDownMenu,
+nav .bottomContainer .links .dropDownMenu:hover{
+    opacity: 1;
+    visibility: visible;
+}
+
+nav .bottomContainer .links .profileIcon:hover .arrowIcon,
+nav .bottomContainer .links .profileIcon:has(+ .dropDownMenu:hover) .arrowIcon{
+    transform: rotate(180deg);
+}
+
+nav .bottomContainer .links .dropDownMenu{
+    background: rgb(236, 236, 236);
+    backdrop-filter: blur(25px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 15px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s ease, visibility .5s ease;
 }

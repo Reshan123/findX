@@ -52,19 +52,18 @@
     box-shadow: #00000069 3px 3px 3px;
 }
 
-.homeView .headerBox .buttonContainer button:nth-child(1){
-    /* background-color: ;
-    color: ; */
-}
+/* .homeView .headerBox .buttonContainer button:nth-child(1){
+ 
+} */
 
 .homeView .headerBox .buttonContainer button:nth-child(2){
     background-color: var(--secondaryColor);
-    color: var(--accentColorLight);
+    color: #fff
 }
 
 
 .homeView .topCourses{
-    width: 90vw;
+    width: 95vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -72,9 +71,12 @@
     margin: 100px auto;
 }
 
+.homeView .topCourses fieldset{
+    border-radius: 15px;
+    padding: 0px 30px;
+}
+
 .homeView .topCourses .title{
-    width: 100%;
-    /* text-align: center; */
     font-size: 2rem;
     font-weight: 800;
     color: var(--primaryColor);
@@ -88,7 +90,6 @@
 }
 
 .homeView .testimonials{
-    /* width: 100vw; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -140,7 +141,7 @@
 
 .homeView .testimonials .testimonialSlider .testimonialCard .testimonialCardDescription{ 
     text-align: center;
-    color: var(--secondaryColor);
+    color: var(--accentColorLight);
 }
 
 .homeView .testimonials .testimonialSlider .testimonialCard svg{
