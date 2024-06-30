@@ -20,6 +20,6 @@ router.put('/user/updateProfile', auth('user'), user.updateUserProfile);
 router.delete('/user/removeAccount', auth('user'), user.deleteUserAccount);
 
 //route for liking for posts
-router.post('/user/like/:id', authMiddleware('user'), user.likeUser);
+router.post('/user/like/:id', auth('user'), user.likeUser);
 
 module.exports = router;
