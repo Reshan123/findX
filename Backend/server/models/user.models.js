@@ -38,10 +38,12 @@ const UserSchema = new mongoose.Schema({
         required: true,
         enum: ['admin', 'user']
     },
-    likes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }]
+    suspended: {
+        type: Boolean,
+        default: false,
+    },
+
+   
 
  
 });

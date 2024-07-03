@@ -1,5 +1,6 @@
 // controllers/courseController.js
 const Course = require('../models/course.models');
+const CourseTrash = require('../models/courseTrash.model');
 
 // Get all courses
 exports.getAllCourses = async (req, res) => {
@@ -57,14 +58,27 @@ exports.getAllCourses = async (req, res) => {
   };
   
   // Delete a course by ID
+ 
+
   exports.deleteCourse = async (req, res) => {
     try {
-      const deletedCourse = await Course.findByIdAndDelete(req.params.id);
-      if (!deletedCourse) {
+      const course = await Course.findById(req.params.id);
+      if (!course) {
         return res.status(404).json({ message: 'Course not found' });
       }
-      res.status(200).json({ message: 'Course deleted successfully' });
+  
+      // Create a new courseTrash document with the same data
+      const courseTrash = new CourseTrash({
+        title: course.title,
+        description: course.description,
+        image: course.image,
+      });
+  
+      await courseTrash.save();
+      await Course.findByIdAndDelete(req.params.id); // Remove course from original collection
+  
+      res.status(200).json({ message: 'Course moved to trash successfully' });
     } catch (error) {
-      res.status(500).json({ message: 'Error deleting course', error });
+      res.status(500).json({ message: 'Error moving course to trash', error });
     }
   };

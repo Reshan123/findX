@@ -5,10 +5,10 @@ const authMiddleware = require('../middlewares/user.verifyAuth');
 const upload = require('../middlewares/multer.middleware');
 
 // Get all courses
-router.get('/getAllCourses', authMiddleware, courseController.getAllCourses);
+router.get('/getAllCourses', courseController.getAllCourses);
 
 // Get a single course by ID
-router.get('/getCourse/:id', authMiddleware, courseController.getCourseById);
+router.get('/getCourse/:id', courseController.getCourseById);
 
 // Add a new course
 router.post('/add/course', authMiddleware('admin'),upload.single('image'), courseController.addCourse);
