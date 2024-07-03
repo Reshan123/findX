@@ -1,0 +1,159 @@
+/* .homeView{
+
+} */
+
+.homeView .headerBox{
+    height: 86vh;
+    background: url(../../assets/home-view-header.png), url('../../assets/background-light.jpg');
+    background-repeat: no-repeat, no-repeat;
+    background-size: 600px, cover;
+    background-position: left 50px center, center;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 15px;
+    padding: 0 125px;
+}
+
+.homeView .headerBox .mainText{
+    font-size: 2.5rem;
+    font-weight: 800;
+    width: 53%;
+    color: var(--primaryColor);
+}
+
+.homeView .headerBox .subText{
+    font-size: .9rem;
+    letter-spacing: 1px;
+    width: 35%;
+}
+
+.homeView .headerBox .buttonContainer{
+    display: flex;
+    gap: 15px;
+}
+
+.homeView .headerBox .buttonContainer button{
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 25px;
+    transition: box-shadow .2s ease-in-out;
+}
+
+.homeView .headerBox .buttonContainer button:hover{
+    box-shadow: #00000069 5px 5px 5px;
+}
+
+.homeView .headerBox .buttonContainer button:active{
+    box-shadow: #00000069 3px 3px 3px;
+}
+
+.homeView .headerBox .buttonContainer button:nth-child(1){
+    /* background-color: ;
+    color: ; */
+}
+
+.homeView .headerBox .buttonContainer button:nth-child(2){
+    background-color: var(--secondaryColor);
+    color: var(--accentColorLight);
+}
+
+
+.homeView .topCourses{
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 100px auto;
+}
+
+.homeView .topCourses .title{
+    width: 100%;
+    /* text-align: center; */
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primaryColor);
+}
+
+.homeView .topCourses .courseContainer{
+    margin: 25px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.homeView .testimonials{
+    /* width: 100vw; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f099;
+    margin: 100px auto;
+    padding: 50px 0;
+}
+
+.homeView .testimonials .title{
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primaryColor);
+}
+
+.homeView .testimonials .testimonialSlider{
+    margin: 40px 0px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.homeView .testimonials .testimonialSlider .dotContainer svg{
+    color: var(--accentColor);
+    font-size: 1.3rem;
+}
+
+.homeView .testimonials .testimonialSlider .testimonialCard{
+    display: grid;
+    grid-template-rows: 2fr 1fr 1fr;
+    /* gap: 15px; */
+    background: #ffffff;
+    border: #f0f0f0c2 2px solid;
+    box-shadow: #00000040 2px 3px 8px;
+    border-radius: 15px;
+    padding: 35px 25px;
+    transition: scale .5s ease-in-out,
+                box-shadow .7s ease;
+}
+
+.homeView .testimonials .testimonialSlider .testimonialCard:hover{
+    scale: 1.02;
+    box-shadow: #00000078 5px 5px 10px;
+}
+
+.homeView .testimonials .testimonialSlider .testimonialCard .testimonialCardDescription{ 
+    text-align: center;
+    color: var(--secondaryColor);
+}
+
+.homeView .testimonials .testimonialSlider .testimonialCard svg{
+    justify-self: center;
+    font-size: 2rem;
+    color: var(--accentColor);
+}
+
+.homeView .testimonials .testimonialSlider .testimonialCard .testimonialCreatedBy{ 
+    padding-top: 8px;
+    justify-self: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--secondaryColor);
+}
+
