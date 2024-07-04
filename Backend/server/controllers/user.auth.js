@@ -1,5 +1,6 @@
 const userSchema = require("../models/user.models");
 const jwt = require('jsonwebtoken');
+const Post = require('../models/posts.model');
 
 const bcrypt = require('bcrypt');
 
@@ -42,6 +43,8 @@ exports.registerUsers = async(req, res) => {
     }
 }
 
+
+
 exports.signIn = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -54,7 +57,7 @@ exports.signIn = async (req, res) => {
             if (passwordMatch) {
                 const id = user._id;
                 const role = user.role; // Assuming the role is stored in the user document
-                const token = jwt.sign({ id, role }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+                const token = jwt.sign({ id, role }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' }); // Change expiration to 1 minute
 
                 // Optionally, you can nullify the password field before sending the user object
                 user.password = null;
@@ -86,6 +89,7 @@ exports.signIn = async (req, res) => {
         });
     }
 };
+
 
 exports.getAllUsers = async (req, res) => {
     try {
@@ -196,28 +200,54 @@ exports.deleteUserAccount = async (req, res) => {
     }
 }
 
-exports.likeUser = async (req, res) => {
-    try {
-        const userId = req.user.id; // Assuming req.user.id is populated by the auth middleware
-        const likedUserId = req.params.id;
 
-        // Check if the liked user exists
-        const likedUser = await User.findById(likedUserId);
-        if (!likedUser) {
-            return res.status(404).json({ message: 'User not found' });
-        }
 
-        // Add the liked user to the current user's likes if not already liked
-        const user = await User.findById(userId);
-        if (!user.likes.includes(likedUserId)) {
-            user.likes.push(likedUserId);
-            await user.save();
-        }
+//controllers for liking and uliking a post ------
 
-        res.status(200).json({ message: 'User liked successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+exports.likePost = async (req, res) => {
+  const { postId } = req.params;
+  const { userId } = req.user.id;
+
+  try {
+    // Check if the user has already liked the post
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
     }
+
+    if (post.likes.includes(userId)) {
+      return res.status(400).json({ message: 'Post already liked by this user' });
+    }
+
+    // Add user to the likes array
+    post.likes.push(userId);
+    await post.save();
+
+    res.status(200).json({ message: 'Post liked successfully' });
+  } catch (error) {
+    console.error('Error liking post:', error);
+    res.status(500).json({ message: 'Error liking post', error });
+  }
 };
 
+exports.unlikePost = async (req, res) => {
+  const { postId } = req.params;
+  const { userId } = req.user.id;
+
+  try {
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    // Filter out the userId from the likes array
+    post.likes = post.likes.filter(like => like.toString() !== userId);
+
+    await post.save();
+
+    res.status(200).json({ message: 'Post unliked successfully' });
+  } catch (error) {
+    console.error('Error unliking post:', error);
+    res.status(500).json({ message: 'Failed to unlike post', error });
+  }
+};

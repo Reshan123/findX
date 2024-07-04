@@ -12,9 +12,10 @@ dotenv.config();
 
 app.use(morgan("common"));
 app.use(cors({
-    origin: ["*"],
+    origin: ['*', 'http://127.0.0.1:5173','http://localhost:3000'],
     methods: ["GET", "POST", "PATCH", "DELETE", "UPDATE", "PUT"],
     credentials: true,
+  
 }));
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
@@ -30,6 +31,9 @@ app.use(`/${API_PREFIX}/admin`, adminRoutes);
 
 const courseRoutes = require('./routes/course.routes');
 app.use(`/${API_PREFIX}`,courseRoutes);
+
+const postRoutes = require('./routes/post.routes');
+app.use(`/${API_PREFIX}/post`,postRoutes);
 
 
 //files upload configuration
