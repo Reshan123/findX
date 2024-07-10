@@ -1,40 +1,45 @@
-import './styles.css'
+// import './styles.css'
 import logo from '../../assets/logo.png'
 
-const Footer = ({ footerBackground }) => {
-    return ( 
-        <footer style={{background: footerBackground}}>
-            <div className="footerGridContainer">
-                <div className="footerGridRow">
-                    <div className="footerGridColoumn">
-                        <div className="footerGridColumnLogo"><img src={logo} alt="AT DIGITAL" /></div>
-                        <div className="footerGridColumnTextContainer">Your goal is our target. Not anything in between. We use online marketing platforms and tools to achieve single objective - your business results.</div>
-                    </div>
-                    <div className="footerGridColoumn">
-                        <div className="footerGridColoumnListTitle">Our Technologies</div>
-                        <div className="footerGridColoumnListItem">ReactJS</div>
-                        <div className="footerGridColoumnListItem">Gatsby</div>
-                        <div className="footerGridColoumnListItem">NextJS</div>
-                        <div className="footerGridColoumnListItem">NodeJS</div>
-                    </div>
-                    <div className="footerGridColoumn">
-                        <div className="footerGridColoumnListTitle">Our Services</div>
-                        <div className="footerGridColoumnListItem">Social Media Marketing</div>
-                        <div className="footerGridColoumnListItem">Web & Mobile App Development</div>
-                        <div className="footerGridColoumnListItem">Data & Analytics</div>
-                    </div>
-                </div>
-                <div className="footerGridRow">
-                    <hr className='footerGridRowBottomHr' />
-                    <div className='bottomContainer'>
-                        <div className='bottomContainerText'>Privacy Policy</div>
-                        <hr />
-                        <div className='bottomContainerText'>Terms & Conditions</div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-     );
+// import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { Box, useTheme } from '@mui/material';
+
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+
+const Footer = () => {
+
+    const theme = useTheme();
+
+    return (
+        <>
+            <Box sx={{ paddingBlock: '5px', backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[200] }}>
+                <Grid sx={{ width: '90vw', marginInline: 'auto', marginBlock: '25px' }} container justifyContent={'space-between'} alignItems={'center'}>
+                    <Grid item>
+                        <Typography variant='body2'>
+                            © FindX. All rights reserved.
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Grid container spacing={2}>
+                            <Grid item>
+                                <FacebookIcon />
+                            </Grid>
+                            <Grid item>
+                                <InstagramIcon />
+                            </Grid>
+                            <Grid item>
+                                <TwitterIcon />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Box>
+        </>
+    );
 }
- 
+
 export default Footer;

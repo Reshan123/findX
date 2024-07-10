@@ -40,6 +40,8 @@ nav .bottomContainer{
 }
 
 nav .bottomContainer .logo{
+    display: flex;
+    align-items: center;
     height: 90%;
 }
 
@@ -96,4 +98,34 @@ nav .bottomContainer .links .dropDownMenu{
     opacity: 0;
     visibility: hidden;
     transition: opacity .5s ease, visibility .5s ease;
+}
+
+@media screen and (max-width: 650px) {
+    nav{
+        padding: 0 10px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+    nav .topContainer{
+        font-size: .6rem;
+    }
+
+    nav .topContainer div{
+        align-items: center;
+    }
+
+    nav .bottomContainer .logo{
+        height: 80%;
+    }
+    
+    nav .bottomContainer .links{
+        margin-right: 20px;
+        font-size: 1rem;
+    }
+
+    nav .bottomContainer .links .profileIcon svg{
+        font-size: 1.5rem;
+    }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useCourseContext } from '../../context/CourseContext';
 
 import './HomeView.css'
@@ -14,15 +14,16 @@ const HomeView = () => {
     const navigate = useNavigate()
     
     const { courses } = useCourseContext();
-    let coursesDisplayed = 0;
 
 
-    const testimonials = [
-        {createdBy: "John Doe", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quas nihil incidunt consequuntur, sapiente possimus officia perferendis modi quaerat eos provident mollitia recusandae? Tempora provident et rem?"}, 
-        {createdBy: "James Perera", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quas nihil incidunt consequuntur, sapiente possimus officia perferendis modi quaerat eos provident "},
-        {createdBy: "Bargus Gune", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quas nihil incidunt consequuntur, cumque cupiditate mollitia recusandae? Tempora provident et rem?"},
-        {createdBy: "Helen Peris", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quas nihil incidunt consequuntur, sapiente possimus offic recusandae? Tempora provident et rem?"}
-    ]
+    const testimonials = useMemo(() =>
+        {return ([
+            {createdBy: "John Doe", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quas nihil incidunt consequuntur, sapiente possimus officia perferendis modi quaerat eos provident mollitia recusandae? Tempora provident et rem?"}, 
+            {createdBy: "James Perera", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quas nihil incidunt consequuntur, sapiente possimus officia perferendis modi quaerat eos provident "},
+            {createdBy: "Bargus Gune", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quas nihil incidunt consequuntur, cumque cupiditate mollitia recusandae? Tempora provident et rem?"},
+            {createdBy: "Helen Peris", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quas nihil incidunt consequuntur, sapiente possimus offic recusandae? Tempora provident et rem?"}
+        ])}, []
+    )
 
     const testimonialCreatedBy = useRef(null);
     const testimonialDescription = useRef(null);
@@ -58,19 +59,16 @@ const HomeView = () => {
                 </div>
             </div>
             <div className="topCourses">
-                <fieldset>
-                    <legend className="title">Top Courses</legend>
+                    <div className="title">Top Courses</div>
                     <div className="courseContainer">
                     {courses && courses
-                        .filter(course => course.rating >= 1 && course.rating <= 5) // Filter courses with valid ratings
-                        .sort((a, b) => b.rating - a.rating) // Sort courses by rating in descending order
-                        .slice(0, 4) // Limit to the first 4 courses
-                        .map((course, index) => (
-                            <CourseCard key={index} course={course} /> // Render the CourseCard component
-                        ))
+                        .map((course, index) => {
+                            if(course.pinnedCourse){
+                                return <CourseCard key={index} course={course} />
+                            }
+                        })
                     }
                     </div>
-                </fieldset>
             </div>
             <div className="testimonials">
                 <div className="title">Testimonials</div>

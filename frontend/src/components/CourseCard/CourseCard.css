@@ -5,7 +5,7 @@
     flex-direction: column;
     border: #f0f0f0c2 2px solid;
     box-shadow: #00000040 2px 3px 8px;
-    border-radius: 15px;
+    border-radius: 5px;
     /* padding: 10px 15px; */
     gap: 15px;
     transition: scale .5s ease-in-out, 
@@ -28,7 +28,7 @@ a.courseCard:hover{
 }
 
 .courseCard .courseImage img{
-    border-radius: 15px 15px 0px 0px;
+    border-radius: 5px 5px 0px 0px;
 }
 
 .courseCard .courseTitle{

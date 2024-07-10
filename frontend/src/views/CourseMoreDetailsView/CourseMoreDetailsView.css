@@ -1,21 +1,66 @@
 .CourseMoreDetailsView{
-    min-height: 86vh;
+    margin: 40px auto;
+    min-height: 88vh;
+    width: 85vw;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0px 5px;
 }
+
+.CourseMoreDetailsView .profileDetails{
+    background: var(--whiteColor);
+    /* align-self: self-start; */
+    padding: 25px 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    transition: box-shadow .4s ease;
+    box-shadow: #00000063 2px 2px 3px;
+}
+
+.CourseMoreDetailsView .profileDetails:hover{
+    box-shadow: #00000063 5px 5px 8px;
+    cursor: pointer;
+}
+
+.CourseMoreDetailsView .profileDetails svg{
+    font-size: 3.5rem;
+    
+}
+
+.CourseMoreDetailsView .profileDetails .userName{
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.CourseMoreDetailsView .profileDetails .email{
+    font-size: .8rem;
+}
+
+.CourseMoreDetailsView .profileDetails .contactNo{
+    font-size: .8rem;
+}
+
 
 .CourseMoreDetailsView .courseImage{
     z-index: -1;
-    width: 100%;
-    aspect-ratio: 1200 / 675;
+    width: 40vw;
+    /* padding: 20px 50px; */
+    aspect-ratio: 1 / 1;
+    margin: 0px auto;
     background-repeat: no-repeat;
     background-size: cover;
     /* background-attachment: fixed; */
-    position: sticky;
-    top: 12vh;
 }
 
 .CourseMoreDetailsView .bottomContainer{
-    /* width: 100vw; */
-    padding: 20px 150px;
+    /* height: 88vh; */
+    margin: auto;
+    width: 50vw;
+    aspect-ratio: 1200 / 675;
+    /* padding: 20px 50px; */
     background: rgba(255, 255, 255, 0.923);
 }
 
@@ -59,7 +104,7 @@
 
 .CourseMoreDetailsView .bottomContainer .courseDescription{
     text-align: justify;
-    padding: 25px 0;
+    padding: 25px 45px;
     letter-spacing: .5px;
     line-height: 1.6;
 }
@@ -76,4 +121,116 @@
     /* font-size: 1rem; */
     color: var(--redColor);
     text-decoration: line-through;
+}
+
+@media screen and (max-width: 1400px) {
+    .CourseMoreDetailsView .courseImage{
+        width: 55vw;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+
+    .CourseMoreDetailsView{
+        width: 90vw;    
+        gap: 0px 35px;
+    }
+
+    .CourseMoreDetailsView .courseImage{
+        width: 60vw;
+    }
+
+    .CourseMoreDetailsView .bottomContainer{
+        width: 60vw;
+        padding: 20px;
+
+    }
+
+    .CourseMoreDetailsView .bottomContainer .titleContainer .courseTitle{
+        font-size: 2.7rem;
+    }
+}
+
+@media screen and (max-width: 1050px) {   
+    .CourseMoreDetailsView{
+        width: 95vw;    
+        gap: 0px 30px;
+    }
+
+    .CourseMoreDetailsView .profileDetails .userName{
+        font-size: 1.2rem;
+    }
+
+}
+
+@media screen and (max-width: 850px) {
+
+    .CourseMoreDetailsView{
+        align-items: center;
+    }
+
+    .CourseMoreDetailsView .profileDetails{
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+    .CourseMoreDetailsView{
+        margin: 0 auto;
+    }
+    .CourseMoreDetailsView .courseImage{
+        width: 70vw;
+    }
+
+    .CourseMoreDetailsView .bottomContainer{
+        width: 70vw;
+    }
+
+    .CourseMoreDetailsView .bottomContainer .titleContainer .courseTitle{
+        font-size: 2.2rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .CourseMoreDetailsView .courseImage{
+        width: 80vw;
+    }
+    
+    .CourseMoreDetailsView .bottomContainer{
+        width: 80vw;
+        padding: 10px;
+    }
+
+    .CourseMoreDetailsView .bottomContainer .courseDescription{
+        padding: 25px;
+        font-size: .8rem;
+    }
+
+    .CourseMoreDetailsView .bottomContainer .ratingContainer .enrollButton{
+        font-size: .9rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .CourseMoreDetailsView .courseImage{
+        width: 90vw;
+    } 
+
+    .CourseMoreDetailsView .bottomContainer{
+        width: 90vw;
+    }
+    
+    .CourseMoreDetailsView .bottomContainer .courseDescription{
+        padding: 25px  10px;
+        font-size: .8rem;
+    }
+
+    .CourseMoreDetailsView .bottomContainer .titleContainer .courseTitle{
+        font-size: 2rem;
+    }
+
+    .CourseMoreDetailsView .bottomContainer .ratingContainer .enrollButton{
+        font-size: .7rem;
+    }
 }

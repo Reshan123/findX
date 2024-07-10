@@ -43,14 +43,121 @@
     gap: 35px;
 }
 
-.coursesView .coursesContainer .courseSearch input,
+/* .coursesView .coursesContainer .courseSearch input,
 .coursesView .coursesContainer .courseSearch select{
     padding: 8px 15px;
-}
+} */
 
 .coursesView .coursesContainer .mainContainer{
     width: 90%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 35px 20px;
+}
+
+@media screen and (max-width: 1300px) {
+    .coursesView .coursesContainer .mainContainer{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+
+    .coursesView .headerBox{
+        padding: 0 50px;
+        background-position: right 10px center, center;
+    }
+
+    .coursesView .headerBox .mainText{
+        width: 55%;
+    }
+    
+    .coursesView .headerBox .subText{
+        width: 45%;
+    }
+
+    .coursesView .coursesContainer .mainContainer{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .coursesView .headerBox{
+        background-size: 400px, cover;
+    }
+
+    .coursesView .headerBox .mainText{
+        font-size: 2rem;
+        width: 60%;
+    }
+    
+    .coursesView .headerBox .subText{
+        font-size: .8rem;
+        width: 50%;
+    }
+
+    .coursesView .coursesContainer .courseSearch{
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 650px) {
+
+    .coursesView .headerBox{
+        background-position: top 50px center, center;
+        background-size: 350px, cover;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 100px 0;
+        text-align: center;
+    }
+
+    .coursesView .headerBox .mainText{
+        width: 60%;
+    }
+    
+    .coursesView .headerBox .subText{
+        width: 50%;
+    }
+
+    .coursesView .coursesContainer .courseSearch{
+        width: 80%;
+    }
+
+    .coursesView .coursesContainer .courseSearch input{
+        width: 90%;
+    }
+
+    .coursesView .coursesContainer .mainContainer{
+        grid-template-columns: 1fr ;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+
+    .coursesView .coursesContainer .courseSearch{
+        margin: 0px 75px;
+    }
+
+}
+
+@media screen and (max-width: 450px) {
+
+    .coursesView .headerBox{
+        background-size: 250px, cover;
+        padding: 100px 0px;
+    }
+
+    .coursesView .headerBox .mainText{
+        font-size: 1.5rem;
+        width: 75%;
+    }
+    
+    .coursesView .headerBox .subText{
+        font-size: .7rem;
+        width: 65%;
+    }
+
 }

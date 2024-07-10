@@ -1,91 +1,79 @@
 import PostCard from '../../components/PostCard/PostCard';
 import CourseCard from '../../components/CourseCard/CourseCard';
+import ProfileCard from '../../components/ProfileCard/ProfileCard';
 
 import { useCourseContext } from '../../context/CourseContext';
 import { usePostContext } from '../../context/PostContext';
 
-import { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import courseImage from '../../assets/courseImage.jpg'
-import './PostWallView.css'
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
 
-import { GoDot, GoDotFill } from "react-icons/go";
+// import './PostWallView.css'
+import { Typography } from '@mui/material';
+import { useTheme } from '@emotion/react';
+import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
 
 const PostWallView = () => {
 
     const { courses } = useCourseContext();
     const { posts } = usePostContext();
-    const [topPosts, setTopPosts] = useState([])
 
-    useEffect(() => {
-        if(posts && posts.length > 0){
-            const filteredList = posts.filter( post => (post.topStory))
-            setTopPosts(filteredList)
-        }
-    })
+    const navigate = useNavigate();
+    const theme = useTheme();
 
-    const postHeaderDescription = useRef(null);
-    const postHeaderPostedOn = useRef(null);
-    const postHeaderPostImage = useRef(null);
-
-    const [currentSlide, setCurrentSlide] = useState(0)
-
-    useEffect(() => {
-        const changeSlider = () => {
-            setCurrentSlide((prevSlide) => (prevSlide < topPosts.length - 1 ? prevSlide + 1 : 0));
-        };
-
-        const intervalId = setInterval(changeSlider, 5000);
-
-        return () => clearInterval(intervalId);
-    }, [topPosts.length]);
-
-    useEffect(() => {
-        if (topPosts && topPosts.length > 0) {
-            if (postHeaderDescription.current && postHeaderPostedOn.current && postHeaderPostImage.current) {
-                postHeaderPostedOn.current.innerText = topPosts[currentSlide].postedOn;
-                postHeaderDescription.current.innerText = topPosts[currentSlide].description;
-                postHeaderPostImage.current.src = topPosts[currentSlide].imagePath
-            }
-        }
-    }, [currentSlide, topPosts]);
-
-
-    return ( 
-        <div className="postWallView">
-            <div className="header">
-                <img src="" alt="" ref={postHeaderPostImage} />
-                <div className="rightContainer">
-                    <div className="description" ref={postHeaderDescription}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur quo unde modi minus perspiciatis exercitationem doloremque suscipit et vel aliquam! Esse numquam possimus autem, quae molestiae harum mollitia omnis? Architecto. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates a praesentium ab tempore quia, ea unde corrupti atque incidunt quasi voluptatum voluptatem! Laudantium asperiores unde distinctio incidunt veniam velit. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut ipsam reiciendis tempora, asperiores repellendus ab magnam. Vero repudiandae veniam earum. Eos sed tempora neque culpa voluptate alias accusamus, ut sapiente? Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo laudantium debitis molestiae in sequi! Aliquid eos amet aspernatur autem sint illo, mollitia nisi provident esse dolore sunt maxime unde iusto! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique veritatis nobis dolor corporis eaque dolores, cupiditate eveniet? Cum beatae amet dolor corporis voluptatum placeat maxime asperiores incidunt, vero ipsam exercitationem.</div>
-                    <div className="postedOn" ref={postHeaderPostedOn}>2024 June 15</div>
-                    <div className="dotContainer">
-                        {topPosts && topPosts.map((i, index) => {
-                            return (index == currentSlide ? <GoDotFill key={index}/> : <GoDot key={index} />)
-                        })}
-                    </div>
-                </div>
-                
-            </div>
-            <div className="gridContainer">
-                <div className="postContainer">
-                    {posts && posts.map( post => {
-                        return <PostCard post={post} key={post.id} />
-                    })}
-                </div>
-                <div className="courseContainer">
-                    <div className="title">Top Courses</div>
-                    {courses && courses
-                        .filter(course => course.rating >= 1 && course.rating <= 5)
-                        .sort((a, b) => b.rating - a.rating) 
-                        .slice(0, 5) 
-                        .map((course, index) => (
-                            <CourseCard key={index} course={course} /> 
-                        ))
-                    }
-                </div>
-            </div>
-        </div>
-     );
+    return (
+        <>
+            <HomeCarousel />
+            <Container maxWidth="lx" sx={{ marginBlock: '20px' }}>
+                <Grid container spacing={0} alignItems={'stretch'} justifyContent={'center'}>
+                    <Grid item lg={3} md={0} xs={0} sx={{ display: {xs: 'none', md: 'none', lg: 'block'} }}>
+                        <ProfileCard />
+                    </Grid>
+                    <Grid item lg={6} md={7} xs={11}>
+                        <Grid container direction={'column'} spacing={{ xs: 3 }} alignItems={'center'}>
+                            {/* <Typography sx={{ width: '90%', margin: 'auto', marginTop: '35px' }} variant='h6' alignSelf={'start'}>Pinned Posts</Typography>
+                            <Divider sx={{ width: '90%', marginBottom: '0px', borderBottomWidth: '3px' }} />
+                            {posts && posts.map(post => {
+                                return (post.pinned && (
+                                    <Grid item sx={{ width: '95%' }} key={post._id}>
+                                        <PostCard post={post} />
+                                    </Grid>)
+                                )
+                            })}
+                            {posts.filter(post => post.pinned).length == 0 && (
+                                <Grid item sx={{ width: '75%' }}>
+                                    <Typography variant='subtitle1' color={theme.palette.grey[500]}>No Pinned Posts</Typography>
+                                </Grid>
+                            )} */}
+                            <Typography sx={{ width: '90%', margin: 'auto', marginTop: '35px' }} variant='h6' alignSelf={'start'}>All Posts</Typography>
+                            <Divider sx={{ width: '90%', marginBottom: '0px', borderBottomWidth: '3px' }} />
+                            {posts && posts.map(post => {
+                                return (
+                                    <Grid item sx={{ width: { xs: '1', sm: '85%', md: '85%'} }} key={post._id}>
+                                        <PostCard post={post} />
+                                    </Grid>
+                                )
+                            })}
+                        </Grid>
+                    </Grid>
+                    <Grid item lg={3} md={4}>
+                        <Grid container direction={'column'} spacing={{ xs: 3 }} alignItems={'center'}>
+                            {courses && courses
+                                .map((course) => (course.pinnedCourse &&
+                                    (<Grid item key={course._id}>
+                                        <CourseCard course={course} />
+                                    </Grid>)
+                                ))
+                            }
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Container>
+        </>
+    );
 }
- 
+
 export default PostWallView;

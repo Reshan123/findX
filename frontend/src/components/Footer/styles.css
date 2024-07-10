@@ -81,21 +81,26 @@ footer .footerGridContainer .footerGridRow:nth-child(2) .bottomContainer{
 
 @media screen and (max-width: 768px) {
     footer .footerGridContainer .footerGridRow:nth-child(1){
-        grid-template-columns: 2fr 2fr 1fr;
+        grid-template-columns: 2fr 2fr;
     }
     footer .footerGridContainer .footerGridRow:nth-child(1) .footerGridColoumn:nth-child(1){
         grid-column: 1/4;
     }
     footer .footerGridContainer .footerGridRow:nth-child(1) .footerGridColoumn:nth-child(1) .footerGridColumnTextContainer{
-        width: 70%;
+        width: 90%;
     }
     footer .footerGridContainer .footerGridRow:nth-child(2) .footerGridRowBottomHr{
         width: 80vw;
     }
 }
 
+@media screen and (max-width: 500px) {
 
-@media screen and (max-width: 375px) {
+    
+}
+
+
+@media screen and (max-width: 500px) {
     footer .footerGridContainer .footerGridRow:nth-child(1){
         grid-template-columns: 1fr;
     }

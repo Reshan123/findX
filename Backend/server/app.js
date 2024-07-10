@@ -12,7 +12,7 @@ dotenv.config();
 
 app.use(morgan("common"));
 app.use(cors({
-    origin: ['*', 'http://127.0.0.1:5173','http://localhost:3000'],
+    origin: "*",
     methods: ["GET", "POST", "PATCH", "DELETE", "UPDATE", "PUT"],
     credentials: true,
   
@@ -38,7 +38,7 @@ app.use(`/${API_PREFIX}/post`,postRoutes);
 
 //files upload configuration
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static('uploads'));
 
 
 module.exports = app;

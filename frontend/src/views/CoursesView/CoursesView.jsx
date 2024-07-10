@@ -4,6 +4,8 @@ import './CoursesView.css'
 import { useCourseContext } from '../../context/CourseContext';
 import { useEffect, useState } from 'react';
 
+import TextField from '@mui/material/TextField';
+
 const CoursesView = () => {
 
     const { courses } = useCourseContext();
@@ -13,20 +15,20 @@ const CoursesView = () => {
     const [maxPriceSearch, setMaxPriceSearch] = useState();
 
     useEffect(() => {
-        if(courses){
+        if (courses) {
             setCurrentlyDisplayedItems(courses)
         }
     }, [courses])
 
     useEffect(() => {
-        
+
         //search function logic
-        if(courses){
-            
+        if (courses) {
+
             let filteredList = []
-            
-            if(courseTitleSearch){
-                filteredList = courses.filter( course => {
+
+            if (courseTitleSearch) {
+                filteredList = courses.filter(course => {
                     return (course.title.toLowerCase().includes(courseTitleSearch.toLowerCase()))
                 })
             } else {
@@ -34,12 +36,12 @@ const CoursesView = () => {
             }
 
             setCurrentlyDisplayedItems(filteredList)
-            
+
         }
 
-    }, [courseTitleSearch, minPriceSearch, maxPriceSearch])
+    }, [courseTitleSearch, minPriceSearch, maxPriceSearch, courses])
 
-    return ( 
+    return (
         <div className="coursesView">
             <div className="headerBox">
                 <div className='mainText'>Empower Your Future with Knowledge!</div>
@@ -47,10 +49,13 @@ const CoursesView = () => {
             </div>
             <div className="coursesContainer">
                 <div className="courseSearch">
-                    <input type="text" placeholder='Course Title' onChange={e => setCourseTitleSearch(e.target.value)} />
-                    <div>
-                        <input type="number" placeholder='Min Price' onChange={e => setMinPriceSearch(e.target.value)} /> - <input type="number" placeholder='Max Price' onChange={e => setMaxPriceSearch(e.target.value)} />
-                    </div>
+                    {/* <input type="text" placeholder='Course Title' onChange={e => setCourseTitleSearch(e.target.value)} /> */}
+                    <TextField id="outlined-basic" label="Course Title" variant="outlined" onChange={e => setCourseTitleSearch(e.target.value)} />
+                    
+                        <TextField id="outlined-basic" label="Min Price" variant="outlined" onChange={e => setMinPriceSearch(e.target.value)} />
+                        <TextField id="outlined-basic" label="Max Price" variant="outlined" onChange={e => setMaxPriceSearch(e.target.value)} />
+                        {/* <input type="number" placeholder='Min Price' onChange={e => setMinPriceSearch(e.target.value)} />  <input type="number" placeholder='Max Price' onChange={e => setMaxPriceSearch(e.target.value)} /> */}
+                    
                     {/* <select name="" id="">
                         <option value="">Select A Rating</option>
                         <option value="1">1</option>
@@ -61,13 +66,13 @@ const CoursesView = () => {
                     </select> */}
                 </div>
                 <div className="mainContainer">
-                    {currentlyDisplayedItems && currentlyDisplayedItems.map( (course, index) => (
+                    {currentlyDisplayedItems && currentlyDisplayedItems.map((course, index) => (
                         <CourseCard key={index} course={course} />
                     ))}
                 </div>
             </div>
         </div>
-     );
+    );
 }
- 
+
 export default CoursesView;

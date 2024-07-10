@@ -18,6 +18,11 @@
 
 }
 
+body{
+  font-size: .9rem;
+  overflow-x: hidden;
+}
+
 ::-webkit-scrollbar {
 	width: 4px;
 }

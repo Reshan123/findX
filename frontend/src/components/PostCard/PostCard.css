@@ -1,16 +1,16 @@
 .postCard{
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     background-color: #e8e8e8b0;
     padding: 0px 0px 15px 0px;
-    border-radius: 15px;
+    border-radius: 5px;
 }
 
 .postCard img{
     align-self: center;
     width: 100%;
-    border-radius: 15px 15px 0px 0px;
+    /* border-radius: 15px 15px 0px 0px; */
 
 }
 
@@ -24,12 +24,13 @@
 
 .postCard .bottomContainer .interactiveContainer{
     background: linear-gradient(to right, #e8e8e8b0, #d5d5d5b0, #e8e8e8b0);
-    border-radius: 15px;
+    border-radius: 5px;
     display: flex;
+    gap: 50px;
     align-items: center;
     justify-content: space-around;
     padding: 15px 25px;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .postCard .bottomContainer .interactiveContainer div{
@@ -40,19 +41,35 @@
 }
 
 .postCard .bottomContainer .interactiveContainer div span{
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: 700;
 }
 
 .postCard .bottomContainer .postCaption{
     text-align: justify;
-    font-size: .99rem;
-    line-height: 1.5;
+    font-size: .9rem;
+    /* line-height: 1.5; */
 }
 
-.postCard .bottomContainer .postedOn{
-    color: var(--primaryColor);
-    align-self: flex-end;
-    font-size: 1rem;
+.postCard .topContainer{
+    margin: 5px 15px 0px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.postCard .topContainer .leftContainer .postTitle{
+    font-size: 2rem;
     font-weight: 600;
+}
+
+.postCard .topContainer .leftContainer .postedOn{
+    color: var(--primaryColor);
+    font-size: .7rem;
+    font-weight: 400;
+    padding: 0 5px;
+}
+
+.postCard .topContainer .rightContainer{
+    font-size: 1.5rem;
 }

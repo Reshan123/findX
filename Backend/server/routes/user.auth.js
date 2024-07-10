@@ -3,6 +3,9 @@ const router = express.Router();
 const user = require("../controllers/user.auth");
 const auth = require('../middlewares/user.verifyAuth');
 
+// Route token validation
+router.get("/user/validateUser" ,auth('user') , user.validateUser);
+
 // Route for user registration
 router.post("/user/signup", user.registerUsers);
 
@@ -11,7 +14,6 @@ router.post("/user/signin", user.signIn);
 
 // Route for getting user profile
 router.get('/user/profile', auth('user'), user.getUserProfile);
-
 
 // Route for updating user profile
 router.put('/user/updateProfile', auth('user'), user.updateUserProfile);

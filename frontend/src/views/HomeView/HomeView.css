@@ -71,12 +71,9 @@
     margin: 100px auto;
 }
 
-.homeView .topCourses fieldset{
-    border-radius: 15px;
-    padding: 0px 30px;
-}
 
 .homeView .topCourses .title{
+    align-self: flex-start;
     font-size: 2rem;
     font-weight: 800;
     color: var(--primaryColor);
@@ -95,7 +92,8 @@
     align-items: center;
     justify-content: center;
     background: #f0f0f099;
-    margin: 100px auto;
+    /* margin: 100px auto; */
+    margin-inline: auto;
     padding: 50px 0;
 }
 
@@ -128,7 +126,7 @@
     background: #ffffff;
     border: #f0f0f0c2 2px solid;
     box-shadow: #00000040 2px 3px 8px;
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 35px 25px;
     transition: scale .5s ease-in-out,
                 box-shadow .7s ease;
@@ -158,3 +156,108 @@
     color: var(--secondaryColor);
 }
 
+@media only screen and (max-width: 1300px) {
+
+    .homeView .topCourses .courseContainer{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .homeView .topCourses .courseContainer a:nth-child(4){
+        display: none;
+    }
+
+    .homeView .testimonials .testimonialSlider{
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 1250px) {
+    .homeView .headerBox{
+        background-size: 500px, cover;
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+
+    .homeView .headerBox{
+        background-size: 400px, cover;
+        padding: 0 100px;
+    }
+
+    .homeView .headerBox .mainText{
+        font-size: 2rem;
+        width: 65%;
+    }
+    
+    .homeView .headerBox .subText{
+        font-size: .8rem;
+        width: 50%;
+    }
+
+    .homeView .topCourses .courseContainer{
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .homeView .topCourses .courseContainer a:nth-child(4){
+        display: block;
+    }
+
+    .homeView .topCourses fieldset{
+        border-radius: 5px;
+        padding: 0px 10px;
+    }
+
+    .homeView .testimonials .testimonialSlider{
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 850px){
+    .homeView .headerBox{
+        background-size: 300px, cover;
+        padding: 0 50px;
+    }
+}
+
+@media only screen and (max-width: 650px){
+
+
+    .homeView .headerBox{
+        background-position: top 50px center, center;
+        justify-content: flex-end;
+        padding: 50px 40px;
+    }
+
+
+    .homeView .headerBox .mainText{
+        font-size: 1.3rem;
+        width: 95%;
+    }
+    
+    .homeView .headerBox .subText{
+        width: 80%;
+    }
+
+    .homeView .topCourses .courseContainer{
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .homeView .headerBox{
+        background-size: 250px, cover;
+        padding: 75px 30px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .homeView .headerBox .mainText{
+        font-size: 1.5rem;
+        width: 95%;
+    }
+    
+    .homeView .headerBox .subText{
+        font-size: .7rem;
+        width: 85%;
+    }
+}

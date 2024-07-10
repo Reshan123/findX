@@ -1,20 +1,80 @@
 const userSchema = require("../models/user.models");
 const jwt = require('jsonwebtoken');
 const Post = require('../models/posts.model');
+const validator = require('validator')
 
 const bcrypt = require('bcrypt');
+
+exports.validateUser = async (req, res) => {
+    try{
+        const userId = req.user.id;
+        const user = await userSchema.findById(userId);
+        if(!user){
+            throw Error("Invalid User")
+        }
+        res.status(200).json({
+            status: 'success',
+            message: 'User Valid!',
+        });
+    } catch(error){
+        console.log(error.message);
+        res.status(500).json({
+            status: 'Fail',
+            message: 'User Invalid!',
+            error: error.message
+        });
+    }
+}
 
 exports.registerUsers = async(req, res) => {
     try {
         const { userInfo } = req.body;
+        console.log(userInfo)
+
+        if(validator.isEmpty(userInfo.password) || validator.isEmpty(userInfo.email) || validator.isEmpty(userInfo.first_name) || validator.isEmpty(userInfo.last_name) || validator.isEmpty(userInfo.contact_no)){
+            return res.status(400).json({
+                status: 'Fail',
+                message: 'Fill All Input Fields!'
+            });
+        }
 
         // Check if the user name is already in use
-        const existingUser = await userSchema.findOne({ user_name: userInfo.user_name });
-        if(existingUser !== null){
+        const existingUsername = await userSchema.findOne({ user_name: userInfo.user_name });
+        if(existingUsername !== null){
             console.log("User name already in use");
             return res.status(400).json({
                 status: 'Fail',
                 message: 'User name already in use!'
+            });
+        }
+
+        const existingUserEmail = await userSchema.findOne({ email: userInfo.email });
+        if(existingUserEmail !== null){
+            console.log("User name already in use");
+            return res.status(400).json({
+                status: 'Fail',
+                message: 'Email already in use!'
+            });
+        }
+
+        if(!validator.isMobilePhone(userInfo.contact_no, ['si-LK'])){
+            return res.status(400).json({
+                status: 'Fail',
+                message: 'Not a valid Phone number!'
+            });
+        }
+
+        if(!validator.isEmail(userInfo.email)){
+            return res.status(400).json({
+                status: 'Fail',
+                message: 'Not a valid Email!'
+            });
+        }
+
+        if(!validator.isStrongPassword(userInfo.password)){
+            return res.status(400).json({
+                status: 'Fail',
+                message: 'Password not strong'
             });
         }
 
@@ -57,7 +117,7 @@ exports.signIn = async (req, res) => {
             if (passwordMatch) {
                 const id = user._id;
                 const role = user.role; // Assuming the role is stored in the user document
-                const token = jwt.sign({ id, role }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' }); // Change expiration to 1 minute
+                const token = jwt.sign({ id, role }, process.env.JWT_SECRET_KEY, { expiresIn: '500m' }); // Change expiration to 1 minute
 
                 // Optionally, you can nullify the password field before sending the user object
                 user.password = null;
