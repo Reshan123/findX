@@ -13,6 +13,8 @@ import { useTheme } from '@emotion/react';
 export default function CourseCard({ course }) {
     
     const navigate = useNavigate();
+    const backendServerURL = import.meta.env.VITE_SERVER_URL
+
     
     const goToMoreDetailsPage = () => {
         navigate("/coursemoredetails/" + course._id)
@@ -26,10 +28,10 @@ export default function CourseCard({ course }) {
                 <CardMedia
                     component="img"
                     // height="100"
-                    image={courseImage}
+                    image={`${backendServerURL}/courseImages/${course.image}`}
                     alt="green iguana"
                 />
-                <CardContent onClick={() => {goToMoreDetailsPage()}} sx={{ display: 'grid', gridTemplateRows: '1fr 2fr .5fr' }}>
+                <CardContent onClick={() => {goToMoreDetailsPage()}} sx={{ display: 'grid', gridTemplateRows: '1fr 4fr .5fr' }}>
                     <Typography variant="h5" sx={{ fontWeight: '600' }}>
                         {course.title || "Course Title"}
                     </Typography>

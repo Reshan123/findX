@@ -149,7 +149,7 @@ function CourseManagement() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setNewCourse({ ...newCourse, image: reader.result });
+        setNewCourse({ ...newCourse, image: file });
         setImagePreview(reader.result); // Set image preview
       };
       reader.readAsDataURL(file);

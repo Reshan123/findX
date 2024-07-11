@@ -3,7 +3,7 @@ const PostTrash = require('../models/postTrash.model');
 
 exports.createPost = async (req, res) => {
     const { title, description } = req.body;
-    const image = req.file ? req.file.path : '';
+    const image = req.file ? req.file.filename : '';
     console.log('Creating post with:', { title, description, image });
   
     try {
@@ -41,7 +41,7 @@ exports.createPost = async (req, res) => {
   
   exports.updatePost = async (req, res) => {
     const { title, description } = req.body;
-    const image = req.file ? req.file.path : req.body.image;
+    const image = req.file ? req.file.filename : req.body.image;
     console.log('Updating post with:', { title, description, image });
   
     try {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { duration, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
@@ -12,7 +12,7 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import courseImage from '../../assets/courseImage.jpg'
 
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
+// import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { usePostContext } from '../../context/PostContext';
 
@@ -27,41 +27,19 @@ const getDate = (date) => {
 function HomeCarousel() {
 
     const { posts } = usePostContext()
+    const backendServerURL = import.meta.env.VITE_SERVER_URL
+
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    const [images, setImages] = React.useState([
-        {
-            title: "Title 1",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis!",
-            createdAt: "2024-07-03T20:43:54.213Z",
-            imgPath: courseImage
-        },
-        {
-            title: "Title 2",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis!",
-            createdAt: "2024-07-03T20:43:54.213Z",
-            imgPath: courseImage,
-        },
-        {
-            title: "Title 3",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis!",
-            createdAt: "2024-07-03T20:43:54.213Z",
-            imgPath: courseImage,
-        },
-        {
-            title: "Title 4",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis!",
-            createdAt: "2024-07-03T20:43:54.213Z",
-            imgPath: courseImage,
-        },
-    ]);
+    const [images, setImages] = React.useState([]);
 
-    // React.useEffect(() => {
-    //     if(posts){
-    //         setImages(posts)
-    //     }
-    // }, [])
+    React.useEffect(() => {
+        if(posts){
+            const filteredList = posts.filter( post => post.pinned )
+            setImages(filteredList)
+        }
+    }, [])
 
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
@@ -88,7 +66,7 @@ function HomeCarousel() {
                 enableMouseEvents
                 interval={2000}
             >
-                {images.map((step, index) => (
+                {images.map((step, index) => ( step.pinned &&
                     <div key={index}>
                         {Math.abs(activeStep - index) <= 2 ? (
                             <Paper sx={{ display: {md: 'grid'}, gridTemplateColumns: {md: '40vw 59vw'},  }}>
@@ -101,7 +79,7 @@ function HomeCarousel() {
                                         // height: '75vh',
                                         //   maxWidth: 400,
                                     }}
-                                    src={step.imgPath}
+                                    src={`${backendServerURL}/${step.image}`}
                                     alt={step.title}
                                 />
                                 <Card sx={{ width: 1 }}>
@@ -162,3 +140,34 @@ function HomeCarousel() {
 }
 
 export default HomeCarousel;
+
+
+
+
+
+// [
+//     {
+//         title: "Title 1",
+//         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis!",
+//         createdAt: "2024-07-03T20:43:54.213Z",
+//         imgPath: courseImage
+//     },
+//     {
+//         title: "Title 2",
+//         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis!",
+//         createdAt: "2024-07-03T20:43:54.213Z",
+//         imgPath: courseImage,
+//     },
+//     {
+//         title: "Title 3",
+//         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis!",
+//         createdAt: "2024-07-03T20:43:54.213Z",
+//         imgPath: courseImage,
+//     },
+//     {
+//         title: "Title 4",
+//         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit iusto nobis consequatur. Magni cum, qui veritatis nesciunt maxime natus aut blanditiis expedita illo repellendus ex explicabo saepe, fugit exercitationem nobis!",
+//         createdAt: "2024-07-03T20:43:54.213Z",
+//         imgPath: courseImage,
+//     },
+// ]

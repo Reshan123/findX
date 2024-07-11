@@ -97,12 +97,13 @@ function PostManagement() {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[1];
+    const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
+      console.log(file)
+      setNewPost({ ...newPost, image: file });
       reader.onloadend = () => {
         setImagePreview(reader.result);
-        setNewPost({ ...newPost, image: file });
       };
       reader.readAsDataURL(file);
     }

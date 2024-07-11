@@ -126,8 +126,6 @@ const ProfileCard = (props) => {
         width: "100%"
     };
 
-    console.log(props)
-
     return (
         <Container id="app-container" {...props} >
             <Stack id="app">

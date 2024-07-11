@@ -50,10 +50,10 @@ export default function SignInSide() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const url = import.meta.env.VITE_SERVER_URL;
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
     axios.post(`${url}/api/auth/user/signin`, {
       email: data.get('email'),
       password: data.get('password')
@@ -64,7 +64,7 @@ export default function SignInSide() {
         navigate("/")
       })
       .catch((err) => {
-        if(err.response.status == 406){
+        if(err.response.status === 406){
           setError(err.response.data.message)
         } else {
           setError('Invalid Credentials')
@@ -106,7 +106,7 @@ export default function SignInSide() {
             Sign in
           </Typography>
           <br />
-          {error && (<Alert severity='error' variant='outlined' onClose={() => { setError('') }}>Invalid Credentials</Alert>)}
+          {error && (<Alert severity='error' variant='outlined' onClose={() => { setError('') }}>{error}</Alert>)}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"

@@ -9,8 +9,8 @@ const drawerWidth = 240;
 
 const Main = styled('main')(({ theme }) => ({
   flexGrow: 1,
-  padding: theme.spacing(3),
-  marginLeft: drawerWidth,
+  // padding: theme.spacing(3),
+  // marginLeft: drawerWidth,
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -27,7 +27,7 @@ const AppBarStyled = styled(AppBar)(({ theme }) => ({
 
 const DrawerStyled = styled(Drawer)(({ theme }) => ({
   width: drawerWidth,
-  flexShrink: 0,
+  // flexShrink: 0,
   '& .MuiDrawer-paper': {
     width: drawerWidth,
   },
@@ -84,9 +84,9 @@ function Dashboard() {
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box>
       <CssBaseline />
-      <AppBarStyled position="fixed">
+      <AppBarStyled position="sticky">
         <Toolbar>
           <LogoImage src="/images/logo.jpeg" alt="Logo" /> {/* Replace with your actual logo image path */}
           <Typography
@@ -104,40 +104,42 @@ function Dashboard() {
           </AvatarContainer>
         </Toolbar>
       </AppBarStyled>
-      <DrawerStyled
-        variant={isMobile ? 'temporary' : 'permanent'}
-        ModalProps={{ keepMounted: true }}
-      >
-        <DrawerHeader>
-          <Typography variant="h6">Admin Panel</Typography>
-        </DrawerHeader>
-        <List>
-          <ListItem button component={Link} to="/users">
-            <ListItemIcon><People /></ListItemIcon>
-            <ListItemText primary="Users Management" />
-          </ListItem>
-          <ListItem button component={Link} to="/courses">
-            <ListItemIcon><Class /></ListItemIcon>
-            <ListItemText primary="Course Management" />
-          </ListItem>
-          <ListItem button component={Link} to="/posts">
-            <ListItemIcon><PostAdd /></ListItemIcon>
-            <ListItemText primary="Post Management" />
-          </ListItem>
-          {/* <ListItem button component={Link} to="/courseContent">
+      <Box sx={{ display: 'flex' }}>
+        <DrawerStyled
+          variant={isMobile ? 'temporary' : 'permanent'}
+          ModalProps={{ keepMounted: true }}
+        >
+          <DrawerHeader>
+            <Typography variant="h6">Admin Panel</Typography>
+          </DrawerHeader>
+          <List>
+            <ListItem button component={Link} to="/users">
+              <ListItemIcon><People /></ListItemIcon>
+              <ListItemText primary="Users Management" />
+            </ListItem>
+            <ListItem button component={Link} to="/courses">
+              <ListItemIcon><Class /></ListItemIcon>
+              <ListItemText primary="Course Management" />
+            </ListItem>
+            <ListItem button component={Link} to="/posts">
+              <ListItemIcon><PostAdd /></ListItemIcon>
+              <ListItemText primary="Post Management" />
+            </ListItem>
+            {/* <ListItem button component={Link} to="/courseContent">
             <ListItemIcon><Class /></ListItemIcon>
             <ListItemText primary="Content Management" />
           </ListItem> */}
-          <ListItem button onClick={handleLogout}>
-            <ListItemIcon><ExitToApp /></ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem>
-        </List>
-      </DrawerStyled>
-      <Main>
-        <DrawerHeader />
-        <Outlet />
-      </Main>
+            <ListItem button onClick={handleLogout}>
+              <ListItemIcon><ExitToApp /></ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItem>
+          </List>
+        </DrawerStyled>
+        <Main>
+          <DrawerHeader />
+          <Outlet />
+        </Main>
+      </Box>
       <ReLoginMessage />
     </Box>
   );

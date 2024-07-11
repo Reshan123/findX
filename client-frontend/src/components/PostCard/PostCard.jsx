@@ -22,7 +22,7 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 const PostCard = ({ post }) => {
 
     const date = new Date(post.createdAt)
-
+    const backendServerURL = import.meta.env.VITE_SERVER_URL
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const day = String(date.getDate()).padStart(2, '0')
 
@@ -46,7 +46,7 @@ const PostCard = ({ post }) => {
                 <CardMedia
                     component="img"
                     width={'100%'}
-                    image={courseImage}
+                    image={`${backendServerURL}/${post.image}`}
                     alt="Paella dish"
                 />
                 <CardContent>
