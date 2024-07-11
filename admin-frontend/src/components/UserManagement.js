@@ -36,6 +36,7 @@ function UserManagement() {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [newPassword, setNewPassword] = useState('');
+  const [adminPassword, setAdminPassword] = useState(''); // State to hold admin password for validation
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
   useEffect(() => {
@@ -82,26 +83,28 @@ function UserManagement() {
 
   const handlePasswordUpdate = async () => {
     try {
-      const response = await axios.put(
-        `http://localhost:3001/api/admin/admin/updatePassword`,
-        {
-          userId: selectedUser._id,
-          newPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
-      );
-      console.log(response.data.message);
-      setOpen(false);
-      setSnackbar({ open: true, message: 'Password updated successfully', severity: 'success' });
+        const response = await axios.put(
+            `http://localhost:3001/api/admin/admin/updatePassword`,
+            {
+                userId: selectedUser._id,
+                newPassword,
+                loggedAdminPassword: adminPassword, // Assuming adminPassword is logged admin's password
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            }
+        );
+        console.log(response.data.message);
+        setOpen(false);
+        setSnackbar({ open: true, message: 'Password updated successfully', severity: 'success' });
     } catch (error) {
-      setSnackbar({ open: true, message: 'Error updating password', severity: 'error' });
-      console.error('Error updating password:', error);
+        setSnackbar({ open: true, message: 'Error updating password', severity: 'error' });
+        console.error('Error updating password:', error);
     }
-  };
+};
+
 
   const handleClickOpen = (user) => {
     setSelectedUser(user);
@@ -112,6 +115,7 @@ function UserManagement() {
     setOpen(false);
     setSelectedUser(null);
     setNewPassword('');
+    setAdminPassword(''); // Reset admin password field on close
   };
 
   const handleSnackbarClose = () => {
@@ -168,6 +172,14 @@ function UserManagement() {
             fullWidth
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            label="Admin Password"
+            type="password"
+            fullWidth
+            value={adminPassword}
+            onChange={(e) => setAdminPassword(e.target.value)}
           />
         </DialogContent>
         <DialogActions>

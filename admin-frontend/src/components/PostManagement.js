@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../hooks/axiosInstance';
 import {
   Typography,
   Table,
@@ -19,6 +19,8 @@ import {
   Box,
   Snackbar,
   Alert,
+  Switch,
+  FormControlLabel,
 } from '@mui/material';
 import { Add, Delete, Edit } from '@mui/icons-material';
 
@@ -28,11 +30,11 @@ function PostManagement() {
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [newPost, setNewPost] = useState({ title: '', description: '', image: null });
+  const [newPost, setNewPost] = useState({ title: '', description: '', image:'' });
   const [imagePreview, setImagePreview] = useState(null);
   const [message, setMessage] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [severity, setSeverity] = useState('success'); // success or error
+  const [severity, setSeverity] = useState('success');
 
   useEffect(() => {
     fetchPosts();
@@ -40,7 +42,7 @@ function PostManagement() {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/post/posts');
+      const response = await axiosInstance.get('/post/posts');
       setPosts(response.data);
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -49,7 +51,7 @@ function PostManagement() {
 
   const handleDeletePost = async () => {
     try {
-      await axios.delete(`http://localhost:3001/api/post/delete/posts/${selectedPost._id}`, {
+      await axiosInstance.delete(`/post/delete/posts/${selectedPost._id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -60,6 +62,22 @@ function PostManagement() {
     } catch (error) {
       console.error('Error deleting post:', error);
       showMessage('Error deleting post', 'error');
+    }
+  };
+
+  const handlePinToggle = async (post) => {
+    try {
+      const updatedPost = { ...post, pinned: !post.pinned };
+      await axiosInstance.put(`/post/${post.pinned ? 'unpin' : 'pin'}/${post._id}`, null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      setPosts(posts.map(p => (p._id === post._id ? updatedPost : p)));
+      showMessage(`Post ${post.pinned ? 'unpinned' : 'pinned'} successfully`, 'success');
+    } catch (error) {
+      console.error('Error updating pin status:', error);
+      showMessage('Error updating pin status', 'error');
     }
   };
 
@@ -79,12 +97,12 @@ function PostManagement() {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[1];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
-        setNewPost({ ...newPost, image: reader.result });
+        setNewPost({ ...newPost, image: file });
       };
       reader.readAsDataURL(file);
     }
@@ -92,7 +110,7 @@ function PostManagement() {
 
   const handleImageCancel = () => {
     setImagePreview(null);
-    setNewPost({ ...newPost, image: null });
+    setNewPost({ ...newPost, image: [] });
   };
 
   const handleAddPost = async (event) => {
@@ -106,14 +124,12 @@ function PostManagement() {
     }
   
     try {
-      const response = await axios.post('http://localhost:3001/api/post/create/posts', formData, {
+      const response = await axiosInstance.post('/post/create/posts', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-  
-      console.log('post Data', response.data);
   
       fetchPosts();
       handleCloseDialog();
@@ -127,8 +143,8 @@ function PostManagement() {
   const handleOpenUpdateDialog = (post) => {
     setSelectedPost(post);
     setOpenUpdateDialog(true);
-    setNewPost({ title: post.title, description: post.description, image: post.image });
-    setImagePreview(post.image);
+    setNewPost({ title: post.title, description: post.description, image: null });
+    setImagePreview(`http://localhost:3001/${post.image}`);
   };
 
   const handleCloseUpdateDialog = () => {
@@ -147,10 +163,10 @@ function PostManagement() {
         formData.append('image', newPost.image);
       }
 
-      await axios.put(`http://localhost:3001/api/post/update/posts/${selectedPost._id}`, formData, {
+      await axiosInstance.put(`/post/update/posts/${selectedPost._id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
 
@@ -218,7 +234,7 @@ function PostManagement() {
                 <TableCell>{post.description}</TableCell>
                 <TableCell>
                   <img
-                    src={`http://localhost:3001/uploads/${post.image}`}
+                    src={`http://localhost:3001/${post.image}`}
                     alt={post.title}
                     style={{ width: 100, height: 'auto' }}
                   />
@@ -230,6 +246,16 @@ function PostManagement() {
                   <IconButton onClick={() => handleOpenUpdateDialog(post)} color="primary">
                     <Edit />
                   </IconButton>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={post.pinned}
+                        onChange={() => handlePinToggle(post)}
+                        color="primary"
+                      />
+                    }
+                    label={post.pinned ? 'Unpin' : 'Pin'}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -261,8 +287,8 @@ function PostManagement() {
           <input type="file" accept="image/*" name="image" onChange={handleImageChange} />
           {imagePreview && (
             <div>
-              <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', maxHeight: 200, marginTop: 10 }} />
-              <Button onClick={handleImageCancel} color="secondary">Cancel Image</Button>
+              <img src={imagePreview} alt="Preview" style={{ width: '100%', marginTop: '10px' }} />
+              <Button onClick={handleImageCancel}>Cancel</Button>
             </div>
           )}
         </DialogContent>
@@ -297,11 +323,11 @@ function PostManagement() {
             value={newPost.description}
             onChange={handleInputChange}
           />
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <input type="file" accept="image/*" name="image" onChange={handleImageChange} />
           {imagePreview && (
             <div>
-              <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', maxHeight: 200, marginTop: 10 }} />
-              <Button onClick={handleImageCancel} color="secondary">Cancel Image</Button>
+              <img src={imagePreview} alt="Preview" style={{ width: '100%', marginTop: '10px' }} />
+              <Button onClick={handleImageCancel}>Cancel</Button>
             </div>
           )}
         </DialogContent>

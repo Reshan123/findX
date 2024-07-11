@@ -7,6 +7,9 @@ import { AuthProvider } from './context/AuthContext';
 import SignInSide from './views/Login';
 import CourseManagement from './components/CourseManagement';
 import PostManagement from './components/PostManagement';
+import AddContent from './components/AddCourseContent';
+import CourseContent from './components/contentManagement';
+import ManageCourseContent from './components/test';
 
 function App() {
   return (
@@ -20,6 +23,8 @@ function App() {
           <Route path="courses" element={<CourseManagement/> }/>
           <Route path="posts" element={<PostManagement/> } />
           <Route path="logout" element={<div>Logout</div>} />
+          <Route path="/manage-content/:courseId" element={<ManageCourseContent />} />
+          <Route path="courseContent" element={<CourseContent />} />
         </Route>
       </Routes>
     </Router>

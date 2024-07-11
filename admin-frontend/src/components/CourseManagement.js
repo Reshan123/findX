@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import axiosInstance from '../hooks/axiosInstance'; // Import the Axios instance
 import {
   Typography,
   Table,
@@ -18,6 +19,8 @@ import {
   TextField,
   Box,
   Snackbar,
+  Rating,
+  Switch,
 } from '@mui/material';
 import { Add, Delete, Edit } from '@mui/icons-material';
 
@@ -26,13 +29,22 @@ function CourseManagement() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [newCourse, setNewCourse] = useState({ title: '', description: '', image: null });
+  const [newCourse, setNewCourse] = useState({
+    title: '',
+    image: null,
+    price: '',
+    rating: 0,
+    shortDescription: '',
+    longDescription: '',
+  });
+  const [imagePreview, setImagePreview] = useState(null); // State for image preview
   const [message, setMessage] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [severity, setSeverity] = useState('success'); // success or error
-
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [courseToDelete, setCourseToDelete] = useState(null);
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     fetchCourses();
@@ -40,7 +52,7 @@ function CourseManagement() {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/getAllCourses', {});
+      const response = await axiosInstance.get('/getAllCourses');
       setCourses(response.data);
       console.log(response.data);
     } catch (error) {
@@ -50,7 +62,7 @@ function CourseManagement() {
 
   const handleDeleteCourse = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/api/deleteCourse/${id}`, {
+      await axiosInstance.delete(`/deleteCourse/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -60,6 +72,36 @@ function CourseManagement() {
     } catch (error) {
       console.error('Error deleting course:', error);
       showMessage('Error deleting course', 'error');
+    }
+  };
+
+  const handlePinCourse = async (id) => {
+    try {
+      await axiosInstance.put(`/pin/${id}`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      fetchCourses();
+      showMessage('Course pinned successfully', 'success');
+    } catch (error) {
+      console.error('Error pinning course:', error);
+      showMessage('Error pinning course', 'error');
+    }
+  };
+
+  const handleUnpinCourse = async (id) => {
+    try {
+      await axiosInstance.put(`/unpin/${id}`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      fetchCourses();
+      showMessage('Course unpinned successfully', 'success');
+    } catch (error) {
+      console.error('Error unpinning course:', error);
+      showMessage('Error unpinning course', 'error');
     }
   };
 
@@ -86,7 +128,15 @@ function CourseManagement() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setNewCourse({ title: '', description: '', image: null });
+    setNewCourse({
+      title: '',
+      image: null,
+      price: '',
+      rating: 0,
+      shortDescription: '',
+      longDescription: '',
+    });
+    setImagePreview(null); // Reset image preview
   };
 
   const handleInputChange = (e) => {
@@ -100,6 +150,7 @@ function CourseManagement() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setNewCourse({ ...newCourse, image: reader.result });
+        setImagePreview(reader.result); // Set image preview
       };
       reader.readAsDataURL(file);
     }
@@ -109,13 +160,18 @@ function CourseManagement() {
     try {
       const formData = new FormData();
       formData.append('title', newCourse.title);
-      formData.append('description', newCourse.description);
-      formData.append('image', newCourse.image);
+      formData.append('price', newCourse.price);
+      formData.append('rating', newCourse.rating);
+      formData.append('shortDescription', newCourse.shortDescription);
+      formData.append('longDescription', newCourse.longDescription);
+      if (newCourse.image) {
+        formData.append('image', newCourse.image);
+      }
 
-      await axios.post('http://localhost:3001/api/add/course', formData, {
+      await axiosInstance.post('/add/course', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
 
@@ -131,26 +187,45 @@ function CourseManagement() {
   const handleOpenUpdateDialog = (course) => {
     setSelectedCourse(course);
     setOpenUpdateDialog(true);
-    setNewCourse({ title: course.title, description: course.description, image: course.image });
+    setNewCourse({
+      title: course.title,
+      price: course.price,
+      rating: course.rating,
+      shortDescription: course.shortDescription,
+      longDescription: course.longDescription,
+      image: course.image,
+    });
+    setImagePreview(`http://localhost:3001/uploads/${course.image}`); // Set image preview for update
   };
 
   const handleCloseUpdateDialog = () => {
     setSelectedCourse(null);
     setOpenUpdateDialog(false);
-    setNewCourse({ title: '', description: '', image: null });
+    setNewCourse({
+      title: '',
+      image: null,
+      price: '',
+      rating: 0,
+      shortDescription: '',
+      longDescription: '',
+    });
+    setImagePreview(null); // Reset image preview
   };
 
   const handleUpdateCourse = async () => {
     try {
       const formData = new FormData();
       formData.append('title', newCourse.title);
-      formData.append('description', newCourse.description);
-      formData.append('image', newCourse.image);
+      formData.append('price', newCourse.price);
+      formData.append('rating', newCourse.rating);
+      formData.append('shortDescription', newCourse.shortDescription);
+      formData.append('longDescription', newCourse.longDescription);
+      if (newCourse.image) formData.append('image', newCourse.image);
 
-      await axios.put(`http://localhost:3001/api/updateCourse/${selectedCourse._id}`, formData, {
+      await axiosInstance.put(`/updateCourse/${selectedCourse._id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
 
@@ -173,6 +248,14 @@ function CourseManagement() {
     setOpenSnackbar(false);
   };
 
+  const handleAddContentClick = (courseId) => {
+    navigate(`/add-content/${courseId}`);
+  };
+
+  const handleManageContentClick = (courseId) => {
+    navigate(`/manage-content/${courseId}`);
+  };
+
   return (
     <Box sx={{ flexGrow: 1, padding: 3 }}>
       <Snackbar
@@ -190,122 +273,211 @@ function CourseManagement() {
         </IconButton>
       </Box>
       <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Image</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {courses.map((course) => (
-              <TableRow key={course._id}>
-                <TableCell>{course.title}</TableCell>
-                <TableCell>{course.description}</TableCell>
-                <TableCell>
-                  <img
-                    src={`http://localhost:3001/uploads/${course.image}`}
-                    alt={course.title}
-                    style={{ width: 100, height: 'auto' }}
-                  />
-                </TableCell>
-                <TableCell>
-                  <IconButton onClick={() => handleOpenConfirmDialog(course)} color="secondary">
-                    <Delete />
-                  </IconButton>
-                  <IconButton onClick={() => handleOpenUpdateDialog(course)} color="primary">
-                    <Edit />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <Table>
+  <TableHead>
+    <TableRow>
+      <TableCell>Image</TableCell> {/* New Image Column */}
+      <TableCell>Title</TableCell>
+      <TableCell>Price</TableCell>
+      <TableCell>Rating</TableCell>
+      <TableCell>Short Description</TableCell>
+      <TableCell>Long Description</TableCell>
+      <TableCell>Pinned</TableCell>
+      <TableCell>Actions</TableCell>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    {courses.map((course) => (
+      <TableRow key={course._id}>
+        <TableCell>
+          <img src={`http://localhost:3001/courseImages/${course.image}`}  style={{ width: 50, height: 50 }} alt="Course" />
+        </TableCell>
+        <TableCell>{course.title}</TableCell>
+        <TableCell>{course.price}</TableCell>
+        <TableCell>
+          <Rating value={course.rating} readOnly />
+        </TableCell>
+        <TableCell>{course.shortDescription}</TableCell>
+        <TableCell>{course.longDescription}</TableCell>
+        <TableCell>
+          <Switch
+            checked={course.pinned}
+            onChange={() => (course.pinned ? handleUnpinCourse(course._id) : handlePinCourse(course._id))}
+            color="primary"
+          />
+        </TableCell>
+        <TableCell>
+          <IconButton onClick={() => handleOpenUpdateDialog(course)}>
+            <Edit />
+          </IconButton>
+          <IconButton onClick={() => handleOpenConfirmDialog(course)}>
+            <Delete />
+          </IconButton>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => handleManageContentClick(course._id)}
+            sx={{ marginLeft: 1 }}
+          >
+            Manage Content
+          </Button>
+        </TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
       </TableContainer>
+
+      {/* Add Course Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>Add New Course</DialogTitle>
+        <DialogTitle>Add Course</DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
-            margin="dense"
             label="Title"
             name="title"
-            fullWidth
             value={newCourse.title}
             onChange={handleInputChange}
+            fullWidth
+            margin="normal"
           />
           <TextField
-            margin="dense"
-            label="Description"
-            name="description"
-            fullWidth
-            multiline
-            rows={4}
-            value={newCourse.description}
+            label="Price"
+            name="price"
+            value={newCourse.price}
             onChange={handleInputChange}
+            fullWidth
+            margin="normal"
           />
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-          {newCourse.image && (
-            <img src={newCourse.image} style={{ maxWidth: '100%', maxHeight: 200, marginTop: 10 }} />
+          <Rating
+            name="rating"
+            value={newCourse.rating}
+            onChange={(e, newValue) => setNewCourse({ ...newCourse, rating: newValue })}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Short Description"
+            name="shortDescription"
+            value={newCourse.shortDescription}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Long Description"
+            name="longDescription"
+            value={newCourse.longDescription}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <input
+            accept="image/*"
+            type="file"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+            id="raised-button-file"
+          />
+          <label htmlFor="raised-button-file">
+            <Button variant="contained" color="primary" component="span">
+              Upload Image
+            </Button>
+          </label>
+          {imagePreview && (
+            <img src={imagePreview} alt="Preview" style={{ marginTop: 10, maxWidth: '100%' }} />
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
+          <Button onClick={handleCloseDialog} color="secondary">
             Cancel
           </Button>
           <Button onClick={handleAddCourse} color="primary">
-            Add Course
+            Add
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Update Course Dialog */}
       <Dialog open={openUpdateDialog} onClose={handleCloseUpdateDialog}>
         <DialogTitle>Update Course</DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
-            margin="dense"
             label="Title"
             name="title"
-            fullWidth
             value={newCourse.title}
             onChange={handleInputChange}
+            fullWidth
+            margin="normal"
           />
           <TextField
-            margin="dense"
-            label="Description"
-            name="description"
-            fullWidth
-            multiline
-            rows={4}
-            value={newCourse.description}
+            label="Price"
+            name="price"
+            value={newCourse.price}
             onChange={handleInputChange}
+            fullWidth
+            margin="normal"
           />
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-          {newCourse.image && (
-            <img src={newCourse.image} alt="Preview" style={{ maxWidth: '100%', maxHeight: 200, marginTop: 10 }} />
+          <Rating
+            name="rating"
+            value={newCourse.rating}
+            onChange={(e, newValue) => setNewCourse({ ...newCourse, rating: newValue })}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Short Description"
+            name="shortDescription"
+            value={newCourse.shortDescription}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Long Description"
+            name="longDescription"
+            value={newCourse.longDescription}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <input
+            accept="image/*"
+            type="file"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+            id="raised-button-file-update"
+          />
+          <label htmlFor="raised-button-file-update">
+            <Button variant="contained" color="primary" component="span">
+              Upload Image
+            </Button>
+          </label>
+          {imagePreview && (
+            <img src={imagePreview} alt="Preview" style={{ marginTop: 10, maxWidth: '100%' }} />
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseUpdateDialog} color="primary">
+          <Button onClick={handleCloseUpdateDialog} color="secondary">
             Cancel
           </Button>
           <Button onClick={handleUpdateCourse} color="primary">
-            Update Course
+            Update
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Confirm Delete Dialog */}
       <Dialog open={openConfirmDialog} onClose={handleCloseConfirmDialog}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to delete the course "{courseToDelete?.title}"?</Typography>
+          <Typography>Are you sure you want to delete this course?</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseConfirmDialog} color="primary">
+          <Button onClick={handleCloseConfirmDialog} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleConfirmDelete} color="secondary">
+          <Button onClick={handleConfirmDelete} color="primary">
             Delete
           </Button>
         </DialogActions>
@@ -315,3 +487,4 @@ function CourseManagement() {
 }
 
 export default CourseManagement;
+

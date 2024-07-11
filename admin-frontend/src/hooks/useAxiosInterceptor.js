@@ -1,13 +1,13 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from './axiosInstance'; // Import the Axios instance
 
 const useAxiosInterceptor = () => {
   const navigate = useNavigate();
   const [showReloginMessage, setShowReloginMessage] = useState(false);
 
   useEffect(() => {
-    const interceptor = axios.interceptors.response.use(
+    const interceptor = axiosInstance.interceptors.response.use(
       (response) => {
         return response;
       },
@@ -22,7 +22,7 @@ const useAxiosInterceptor = () => {
 
     // Clean up interceptor on unmount or as needed
     return () => {
-      axios.interceptors.response.eject(interceptor);
+      axiosInstance.interceptors.response.eject(interceptor);
     };
   }, []);
 
