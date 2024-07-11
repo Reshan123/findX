@@ -57,7 +57,7 @@ exports.signIn = async (req, res) => {
             if (passwordMatch) {
                 const id = user._id;
                 const role = user.role; // Assuming the role is stored in the user document
-                const token = jwt.sign({ id, role }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' }); // Change expiration to 1 minute
+                const token = jwt.sign({ id, role }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' }); // Change expiration to 1 minute
 
                 // Optionally, you can nullify the password field before sending the user object
                 user.password = null;

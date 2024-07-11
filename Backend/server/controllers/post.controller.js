@@ -83,3 +83,37 @@ exports.createPost = async (req, res) => {
       res.status(500).json({ message: 'Error moving post to trash', error });
     }
   };
+
+  exports.pinPost = async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+  
+      post.pinned = true;
+      await post.save();
+  
+      res.status(200).json({ message: 'Post pinned successfully', post });
+    } catch (error) {
+      console.error('Error pinning post:', error);
+      res.status(500).json({ message: 'Error pinning post', error });
+    }
+  };
+  
+  exports.unpinPost = async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+  
+      post.pinned = false;
+      await post.save();
+  
+      res.status(200).json({ message: 'Post unpinned successfully', post });
+    } catch (error) {
+      console.error('Error unpinning post:', error);
+      res.status(500).json({ message: 'Error unpinning post', error });
+    }
+  };

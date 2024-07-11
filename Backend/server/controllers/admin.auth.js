@@ -59,6 +59,19 @@ exports.unsuspendUser = async (req, res) => {
 exports.updateUserPassword = async (req, res) => {
     try {
         const { userId, newPassword } = req.body;
+        const { loggedAdminPassword } = req.body; // Assuming you pass loggedAdminPassword from frontend
+
+        // Check if the logged user is an admin
+        const loggedUser = await User.findById(req.user.id);
+        if (!loggedUser || loggedUser.role !== 'admin') {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+
+        // Verify admin password
+        const isAdminAuthenticated = await bcrypt.compare(loggedAdminPassword, loggedUser.password);
+        if (!isAdminAuthenticated) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
 
         // Check if the user exists
         const user = await User.findById(userId);

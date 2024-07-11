@@ -1,7 +1,9 @@
 // controllers/courseController.js
 const Course = require('../models/course.models');
 const CourseTrash = require('../models/courseTrash.model');
+const User = require('../models/user.models'); 
 
+// Get all courses
 // Get all courses
 exports.getAllCourses = async (req, res) => {
     try {
@@ -28,9 +30,8 @@ exports.getAllCourses = async (req, res) => {
   // Add a new course
   exports.addCourse = async (req, res) => {
     try {
-      const { title, description } = req.body;
-      const image = req.file ? req.file.path : '';
-      const newCourse = new Course({ title, image, description });
+      const { title, image, pinnedCourse, price, rating, shortDescription, longDescription } = req.body;
+      const newCourse = new Course({ title, image, pinnedCourse, price, rating, shortDescription, longDescription });
       await newCourse.save();
       res.status(201).json(newCourse);
     } catch (error) {
@@ -41,11 +42,10 @@ exports.getAllCourses = async (req, res) => {
   // Update a course by ID
   exports.updateCourse = async (req, res) => {
     try {
-      const { title, description } = req.body;
-      const image = req.file ? req.file.path : req.body.image;
+      const { title, image, pinnedCourse, price, rating, shortDescription, longDescription } = req.body;
       const updatedCourse = await Course.findByIdAndUpdate(
         req.params.id,
-        { title, image, description },
+        { title, image, pinnedCourse, price, rating, shortDescription, longDescription },
         { new: true }
       );
       if (!updatedCourse) {
@@ -58,8 +58,6 @@ exports.getAllCourses = async (req, res) => {
   };
   
   // Delete a course by ID
- 
-
   exports.deleteCourse = async (req, res) => {
     try {
       const course = await Course.findById(req.params.id);
@@ -70,8 +68,12 @@ exports.getAllCourses = async (req, res) => {
       // Create a new courseTrash document with the same data
       const courseTrash = new CourseTrash({
         title: course.title,
-        description: course.description,
         image: course.image,
+        // pinnedCourse: course.pinnedCourse,
+        price: course.price,
+        rating: course.rating,
+        shortDescription: course.shortDescription,
+        longDescription: course.longDescription,
       });
   
       await courseTrash.save();
@@ -82,3 +84,32 @@ exports.getAllCourses = async (req, res) => {
       res.status(500).json({ message: 'Error moving course to trash', error });
     }
   };
+
+
+// Pin a course by ID
+exports.pinCourse = async (req, res) => {
+  try {
+    const course = await Course.findByIdAndUpdate(req.params.id, { pinnedCourse: true }, { new: true });
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+    res.status(200).json({ message: 'Course pinned successfully', course });
+  } catch (error) {
+    res.status(500).json({ message: 'Error pinning course', error });
+  }
+};
+
+// Unpin a course by ID
+exports.unpinCourse = async (req, res) => {
+  try {
+    const course = await Course.findByIdAndUpdate(req.params.id, { pinnedCourse: false }, { new: true });
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+    res.status(200).json({ message: 'Course unpinned successfully', course });
+  } catch (error) {
+    res.status(500).json({ message: 'Error unpinning course', error });
+  }
+};
+
+
