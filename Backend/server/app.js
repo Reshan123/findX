@@ -35,6 +35,9 @@ app.use(`/${API_PREFIX}`,courseRoutes);
 const postRoutes = require('./routes/post.routes');
 app.use(`/${API_PREFIX}/post`,postRoutes);
 
+const courseContentRoutes = require('./routes/courseContent.routes');
+app.use(`/${API_PREFIX}/courseContent`,courseContentRoutes);
+
 
 //files upload configuration
 app.use(express.json());

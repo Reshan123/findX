@@ -19,4 +19,8 @@ router.put('/update/posts/:id',auth('admin'), upload.single('image'), postContro
 // Delete a post
 router.delete('/delete/posts/:id',auth('admin'), postController.deletePost);
 
+router.put('/pin/:id',auth('admin'), postController.pinPost);
+
+router.put('/unpin/:id',auth('admin'), postController.unpinPost);
+
 module.exports = router;

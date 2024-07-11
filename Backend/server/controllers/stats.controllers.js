@@ -5,10 +5,9 @@ const Course = require('../models/course.models');
 
 exports.getCounts = async (req, res) => {
     try {
-      // Replace these with actual logic to fetch counts
       const totalPosts = await Post.countDocuments();
       const totalUsers = await User.countDocuments();
-      const suspendedUsers = await User.countDocuments({ status: 'suspended' });
+      const suspendedUsers = await User.countDocuments({ suspended: true });
       const totalCourses = await Course.countDocuments();
   
       res.status(200).json({
@@ -22,3 +21,4 @@ exports.getCounts = async (req, res) => {
       res.status(500).json({ message: 'Error fetching counts', error });
     }
   };
+  
