@@ -51,10 +51,11 @@ function NavBar() {
         addUser([]);
         localStorage.removeItem('user');
         localStorage.setItem('user', JSON.stringify([]));
+        navigate('/')
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[200], boxShadow: 'none' }}>
+        <AppBar position="sticky" sx={{ backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[200], boxShadow: 'none' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography

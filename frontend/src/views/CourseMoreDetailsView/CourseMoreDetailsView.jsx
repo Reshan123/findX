@@ -13,6 +13,8 @@ import { TiStarFullOutline } from "react-icons/ti";
 import { FaUserCircle } from "react-icons/fa";
 
 import { useNavigate } from 'react-router-dom';
+import ProfileCard from '../../components/ProfileCard/ProfileCard';
+import { useTheme } from '@mui/material';
 
 
 
@@ -21,6 +23,7 @@ const CourseMoreDetailsView = () => {
     const { id } = useParams()
 
     const navigate = useNavigate();
+    const theme = useTheme()
 
     const { user } = useUserContext()
     const { courses } = useCourseContext();
@@ -33,16 +36,16 @@ const CourseMoreDetailsView = () => {
     }, [courses, id])
 
     return (
-        <div className="CourseMoreDetailsView">
+        <div className={`CourseMoreDetailsView ${ !user[1] ? 'CourseMoreDetailsViewSingle': ''}`}>
             { user[1] && (
-                <div className="profileDetails" onClick={() => navigate('/profile')}>
-                    <FaUserCircle />
-                    <div className="userName">{user[1] && (user[1].first_name + " " + user[1].last_name)}</div>
-                    <div className="email">{user[1] && user[1].email}</div>
-                    <div className="contactNo">{user[1] && user[1].contact_no}</div>
-                </div>
+                    <ProfileCard />
+                // <div className="profileDetails" onClick={() => navigate('/profile')}>
+                // </div>
             )}
-            <div className="course">
+            {/* { !user[1] && (
+                    <div></div>
+            )} */}
+            <div className='course'>
                 {course[0] && (
                     <>
                         {/* <img src={courseImage} alt="courseImage" /> */}
@@ -58,7 +61,7 @@ const CourseMoreDetailsView = () => {
                             </div>
                             <div className="ratingContainer">
                                 <div className="courseRating">
-                                    <Rating initialRating={course[0].rating || 2} readonly emptySymbol={<TiStarOutline style={{ fontSize: "1.5rem", color: "#fbb331" }} />} fullSymbol={<TiStarFullOutline style={{ fontSize: "1.5rem", color: "#fbb331" }} />} />
+                                <Rating initialRating={course.rating || 2} readonly emptySymbol={<TiStarOutline style={{ fontSize: "2rem", color: theme.palette.mode === 'dark' ? '#FFF' : '#000' }} />} fullSymbol={<TiStarFullOutline style={{ fontSize: "2rem", color: theme.palette.mode === 'dark' ? '#FFF' : '#000' }} />} />
                                 </div>
                                 <button className="enrollButton">Enroll to Course</button>
                             </div>

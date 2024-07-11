@@ -4,7 +4,7 @@ import { useUserContext } from '../../context/UserContext';
 import BgPatternCard from "./bg-pattern-card.svg";
 import avatarPath from "./profile-image.jpeg";
 
-const ProfileCard = () => {
+const ProfileCard = (props) => {
     const { user } = useUserContext();
     const appTheme = useTheme();
 
@@ -30,7 +30,7 @@ const ProfileCard = () => {
         boxShadow: "0px 2px 10px rgb(0, 0, 0, 0.1)"
     };
 
-    const avatarSize = isXs ? '4rem' : isSm ? '5rem' : isLg ? '6rem' : '6rem';
+    const avatarSize = isXs ? '4rem' : isSm ? '5rem' : isLg ? '7rem' : '7rem';
 
     const sxProfileStack = {
         width: "100%",
@@ -126,8 +126,10 @@ const ProfileCard = () => {
         width: "100%"
     };
 
+    console.log(props)
+
     return (
-        <Container id="app-container">
+        <Container id="app-container" {...props} >
             <Stack id="app">
                 <Stack id="card" sx={{ ...sxCardStack, boxShadow: 3, border: appTheme.palette.mode === 'dark' ? "2px solid #ffffff75" : "" }}>
                     <Stack id="profile" sx={sxProfileStack}>

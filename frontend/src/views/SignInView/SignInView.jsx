@@ -64,19 +64,23 @@ export default function SignInSide() {
         localStorage.setItem("user", JSON.stringify([res.data.token, res.data.user]))
         navigate("/")
       })
-      .catch(() => {
-        setError('Invalid Credentials')
+      .catch((err) => {
+        if(err.response.status == 406){
+          setError(err.response.data.message)
+        } else {
+          setError('Invalid Credentials')
+        }
       })
   };
 
   return (
-    <Grid container component="main" sx={{ height: '88vh' }}>
+    <Grid container component="main" sx={{ minHeight: '80vh' }}>
       <CssBaseline />
       <Grid
         item
         xs={false}
         sm={false}
-        md={7}
+        md={false}
         sx={{
           backgroundImage: 'url(https://img.freepik.com/free-vector/e-learning-education-template-vector-technology-ad-banner_53876-125996.jpg?t=st=1718899967~exp=1718903567~hmac=a5910275db13ad6914b7bdfd2ae0c8229963fcd64176b364098fd93ff08c6a2e&w=1380)',
           backgroundRepeat: 'no-repeat',
@@ -86,7 +90,7 @@ export default function SignInSide() {
           backgroundPosition: 'center',
         }}
       />
-      <Grid item xs={12} sm={12} md={5} component={Paper} square>
+      <Grid item xs={12} sm={12} md={12} component={Paper} square>
         <Box
           sx={{
             my: 8,

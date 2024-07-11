@@ -2,16 +2,30 @@
     margin: 40px auto;
     min-height: 88vh;
     width: 85vw;
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    /* align-items: flex-start; */
     justify-content: center;
-    gap: 0px 5px;
+    gap: 50px;
+    /* gap: 0px 5px; */
+}
+
+.CourseMoreDetailsViewSingle{
+    margin: 40px auto;
+    min-height: 88vh;
+    width: 65vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    /* align-items: flex-start; */
+    justify-content: center;
+    gap: 50px;
+    /* gap: 0px 5px; */
 }
 
 .CourseMoreDetailsView .profileDetails{
     background: var(--whiteColor);
     /* align-self: self-start; */
-    padding: 25px 75px;
+    /* padding: 25px 75px; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,33 +34,9 @@
     box-shadow: #00000063 2px 2px 3px;
 }
 
-.CourseMoreDetailsView .profileDetails:hover{
-    box-shadow: #00000063 5px 5px 8px;
-    cursor: pointer;
-}
-
-.CourseMoreDetailsView .profileDetails svg{
-    font-size: 3.5rem;
-    
-}
-
-.CourseMoreDetailsView .profileDetails .userName{
-    font-size: 1.8rem;
-    font-weight: 600;
-}
-
-.CourseMoreDetailsView .profileDetails .email{
-    font-size: .8rem;
-}
-
-.CourseMoreDetailsView .profileDetails .contactNo{
-    font-size: .8rem;
-}
-
-
 .CourseMoreDetailsView .courseImage{
     z-index: -1;
-    width: 40vw;
+    width: 90%;
     /* padding: 20px 50px; */
     aspect-ratio: 1 / 1;
     margin: 0px auto;
@@ -58,10 +48,10 @@
 .CourseMoreDetailsView .bottomContainer{
     /* height: 88vh; */
     margin: auto;
-    width: 50vw;
-    aspect-ratio: 1200 / 675;
+    width: 90%;
+    /* aspect-ratio: 1 / 1; */
     /* padding: 20px 50px; */
-    background: rgba(255, 255, 255, 0.923);
+    /* background: rgba(255, 255, 255, 0.923); */
 }
 
 .CourseMoreDetailsView .bottomContainer .titleContainer{

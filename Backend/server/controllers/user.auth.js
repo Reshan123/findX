@@ -12,6 +12,9 @@ exports.validateUser = async (req, res) => {
         if(!user){
             throw Error("Invalid User")
         }
+        if(user.suspended){
+            throw Error("User Suspended")
+        }
         res.status(200).json({
             status: 'success',
             message: 'User Valid!',
@@ -121,6 +124,13 @@ exports.signIn = async (req, res) => {
 
                 // Optionally, you can nullify the password field before sending the user object
                 user.password = null;
+
+                if(user.suspended){
+                    res.status(406).json({
+                        status: 'Fail',
+                        message: 'User Suspended Contact Admin!',
+                    });
+                }
 
                 res.status(202).json({
                     status: "Success",

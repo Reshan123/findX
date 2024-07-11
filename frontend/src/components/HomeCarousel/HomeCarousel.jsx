@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
+import { duration, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
@@ -86,12 +86,12 @@ function HomeCarousel() {
                 index={activeStep}
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
-                interval={7000}
+                interval={2000}
             >
                 {images.map((step, index) => (
                     <div key={index}>
                         {Math.abs(activeStep - index) <= 2 ? (
-                            <Paper sx={{ display: {md: 'grid'}, gridTemplateColumns: {md: '1.5fr 2fr'},  }}>
+                            <Paper sx={{ display: {md: 'grid'}, gridTemplateColumns: {md: '40vw 59vw'},  }}>
                                 <Box
                                     component="img"
                                     sx={{

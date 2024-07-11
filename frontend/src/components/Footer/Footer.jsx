@@ -16,8 +16,8 @@ const Footer = () => {
 
     return (
         <>
-            <Box sx={{ paddingBlock: '5px', backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[200] }}>
-                <Grid sx={{ width: '90vw', marginInline: 'auto', marginBlock: '25px' }} container justifyContent={'space-between'} alignItems={'center'}>
+            <Box sx={{ paddingBlock: '25px', backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[200] }}>
+                <Grid sx={{ width: '90vw', marginInline: 'auto' }} container justifyContent={'space-between'} alignItems={'center'}>
                     <Grid item>
                         <Typography variant='body2'>
                             © FindX. All rights reserved.

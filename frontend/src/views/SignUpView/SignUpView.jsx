@@ -87,13 +87,13 @@ export default function SignUpSide() {
   };
 
   return (
-    <Grid container component="main" sx={{}}>
+    <Grid container component="main" sx={{ minHeight: '80vh'}}>
       <CssBaseline />
       <Grid
         item
         xs={false}
-        sm={4}
-        md={7}
+        sm={false}
+        md={false}
         sx={{
           backgroundImage: 'url(https://img.freepik.com/free-vector/e-learning-education-template-vector-technology-ad-banner_53876-125996.jpg?t=st=1718899967~exp=1718903567~hmac=a5910275db13ad6914b7bdfd2ae0c8229963fcd64176b364098fd93ff08c6a2e&w=1380)',
           backgroundRepeat: 'no-repeat',
@@ -103,10 +103,10 @@ export default function SignUpSide() {
           backgroundPosition: 'center',
         }}
       />
-      <Grid item xs={12} sm={8} md={5} component={Paper} square>
+      <Grid item xs={12} sm={12} md={12} component={Paper} square>
         <Box
           sx={{
-            my: 8,
+            my: 4,
             mx: 4,
             display: 'flex',
             flexDirection: 'column',
@@ -121,7 +121,7 @@ export default function SignUpSide() {
           </Typography>
           <br />
           {error && (<Alert severity='error' variant='outlined' onClose={() => { setError('') }}>{error}</Alert>)}
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
+          <Box maxWidth='md' component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1,  }}>
             <TextField
               margin="normal"
               required
