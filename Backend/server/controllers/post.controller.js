@@ -18,7 +18,7 @@ exports.createPost = async (req, res) => {
   
   exports.getAllPosts = async (req, res) => {
     try {
-      const posts = await Post.find();
+      const posts = await Post.find().sort({_id: -1});
       res.status(200).json(posts);
     } catch (error) {
       console.error('Error fetching posts:', error);

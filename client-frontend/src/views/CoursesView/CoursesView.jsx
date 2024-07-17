@@ -67,7 +67,7 @@ const CoursesView = () => {
                 </div>
                 <div className="mainContainer">
                     {currentlyDisplayedItems && currentlyDisplayedItems.map((course, index) => (
-                        <CourseCard key={index} course={course} />
+                        <CourseCard key={index} course={course} withDescription={true} />
                     ))}
                 </div>
             </div>

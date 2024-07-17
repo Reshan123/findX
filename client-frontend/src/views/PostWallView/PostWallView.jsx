@@ -27,7 +27,7 @@ const PostWallView = () => {
     return (
         <>
             <HomeCarousel />
-            <Container maxWidth='lg' sx={{ marginBlock: '50px' }}>
+            <Container disableGutters maxWidth='lg' sx={{ marginBlock: '50px' }}>
                 <Grid container spacing={3} alignItems={'stretch'} justifyContent={'center'}>
                     <Grid item lg={3.5} md={0} xs={0} sx={{ display: {xs: 'none', md: 'none', lg: 'block'} }}>
                         <ProfileCard sx={{ position: 'sticky', top: 100 }} />
