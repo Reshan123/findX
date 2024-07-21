@@ -1,9 +1,9 @@
 
 :root{
-  --primaryColor: #21046a;
-  --secondaryColor: #0E46A3;
-  --accentColor: #72c3cc;
-  --accentColorLight: #b2ecf2;
+  --primaryColor: #2e2a80;
+  --secondaryColor: #fbb331;
+  --accentColor: #000000;
+  --accentColorLight: #888888;
   --redColor: #c01414;
   --whiteColor: #f3f3f3b8;
   --blackColor: #222222;
@@ -42,7 +42,7 @@ img{
 
 a{
   text-decoration: none;
-  color: var(--primaryColor);
+  color: var(--blackColor);
   transition: .25s ease-in-out color;
 }
 

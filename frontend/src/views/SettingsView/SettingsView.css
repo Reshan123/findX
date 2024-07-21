@@ -1,0 +1,22 @@
+.settingsView{
+    min-height: 88vh;
+}
+
+.settingsView .topContainer{
+    height: 25vh;
+    background: var(--whiteColor);
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    padding: 0 100px;
+}
+
+.settingsView .topContainer .title{
+    font-size: 4rem;
+    font-weight: 600;
+}
+
+.settingsView .topContainer .subText{
+    padding: 5px;
+}

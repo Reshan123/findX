@@ -22,6 +22,10 @@ footer .footerGridContainer .footerGridRow:nth-child(1) .footerGridColoumn:nth-c
     gap: 20px;
 }
 
+footer .footerGridContainer .footerGridRow .footerGridColoumn .footerGridColumnLogo img{
+ width: 20%;
+}
+
 footer .footerGridContainer .footerGridRow:nth-child(1) .footerGridColoumn:nth-child(1) .footerGridColumnTextContainer{
     width: 50%;
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Avatar, useMediaQuery, useTheme, styled } from '@mui/material';
 import { People, Class, PostAdd, ExitToApp } from '@mui/icons-material';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import LoadingSpinner from './LoadingSpinner'; // Import the LoadingSpinner component
+import LoadingSpinner from './LoadingSpinner'; 
 import ReLoginMessage from './TokenExpiredOverlay';
 
 const drawerWidth = 240;
