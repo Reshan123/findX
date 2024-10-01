@@ -1,5 +1,7 @@
 import './PostCard.css'
-import courseImage from '../../assets/courseImage.jpg'
+import { useUserContext } from '../../context/UserContext';
+import axios from 'axios';
+// import courseImage from '../../assets/courseImage.jpg'
 
 import { FaRegComment } from "react-icons/fa";
 // import { BiLike } from "react-icons/bi";
@@ -15,16 +17,22 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PushPinIcon from '@mui/icons-material/PushPin';
+import { headers } from 'next/headers';
 
 const PostCard = ({ post }) => {
 
+    const { user } = useUserContext()
     const date = new Date(post.createdAt)
     const backendServerURL = import.meta.env.VITE_SERVER_URL
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const day = String(date.getDate()).padStart(2, '0')
+
+    const url = import.meta.env.VITE_SERVER_URL
+    // console.log(user[1].likes)
 
     return (
         <>
@@ -56,10 +64,22 @@ const PostCard = ({ post }) => {
                 </CardContent>
                 <CardActions>
                     <IconButton aria-label="add to favorites">
-                        <FavoriteIcon /> <Typography>1.2k</Typography>
+                        {user[1].likes.map(like => ((like == post._id) ? <FavoriteIcon key={like} /> : <FavoriteBorderIcon key={like} />))}
+                        {(user[1].likes.length == 0) && <FavoriteBorderIcon onClick={() => {
+                            axios.post(`${url}/api/auth/like/${post._id}`, {}, {
+                                headers: {
+                                    'Authorization': `Bearer ${user[0]}`
+                                }
+                            })
+                                .then(res => console.log(res))
+                                .catch(err => console.log(err))
+
+                        }} />}
+                        {/* <Typography>1.2k</Typography> */}
                     </IconButton>
-                    <IconButton aria-label="comment" sx={{ display: 'flex', gap: '3px'}}>
-                        <FaRegComment /> <Typography>50</Typography>
+                    <IconButton aria-label="comment" sx={{ display: 'flex', gap: '3px' }}>
+                        <FaRegComment />
+                        {/* <Typography>50</Typography> */}
                     </IconButton>
                     <IconButton aria-label="share">
                         <ShareIcon />

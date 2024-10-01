@@ -14,7 +14,7 @@ import Divider from '@mui/material/Divider';
 // import './PostWallView.css'
 import { Typography } from '@mui/material';
 // import { useTheme } from '@emotion/react';
-import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
+// import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
 
 const PostWallView = () => {
 
@@ -26,7 +26,7 @@ const PostWallView = () => {
 
     return (
         <>
-            <HomeCarousel />
+            {/* <HomeCarousel /> */}
             <Container disableGutters maxWidth='lg' sx={{ marginBlock: '50px' }}>
                 <Grid container spacing={3} alignItems={'stretch'} justifyContent={'center'}>
                     <Grid item lg={3.5} md={0} xs={0} sx={{ display: {xs: 'none', md: 'none', lg: 'block'} }}>
@@ -59,8 +59,8 @@ const PostWallView = () => {
                             })}
                         </Grid>
                     </Grid>
-                    <Grid item lg={3.5} md={4}>
-                        <Grid container direction={'column'} spacing={{ xs: 3 }} alignItems={'center'}>
+                    <Grid item lg={3.5} md={4} >
+                        <Grid container direction={'column'} spacing={{ xs: 3 }} alignItems={'center'} sx={{ position: 'sticky', top: 100 }}>
                         <Typography sx={{ width: '90%', margin: 'auto', marginTop: '35px' }} variant='h6' alignSelf={'start'}>Top Courses</Typography>
                         <Divider sx={{ width: '90%', marginBottom: '0px', borderBottomWidth: '3px' }} />
                             {courses && courses
